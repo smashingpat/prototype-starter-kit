@@ -4,7 +4,8 @@
   "description": "a starter kit with SASS, Gulp and Budo for quick prototyping",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "gulp watch",
+    "bundle": "gulp bundle"
   },
   "keywords": [
     "html",
