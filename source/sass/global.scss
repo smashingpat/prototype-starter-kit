@@ -1,6 +1,8 @@
-$color: yellow;
+@import 'normalize';
+
+*,*:after,*:before {
+    box-sizing: border-box;
+}
 
 html,
-body {
-    background: $color;
-}
+body {}

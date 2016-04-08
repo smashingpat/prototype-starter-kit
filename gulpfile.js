@@ -1,17 +1,18 @@
 const gulp = require('gulp')
 const watch = require('gulp-watch')
 const sass = require('gulp-sass')
+const postcss = require('gulp-postcss')
+
+const budo = require('budo')
+const argv = require('yargs').argv;
 const uglify = require('gulp-uglify')
 const rename = require('gulp-rename')
-const streamify = require('gulp-streamify')
+const stream = require('gulp-streamify')
 const source = require('vinyl-source-stream')
-const budo = require('budo')
 const browserify = require('browserify')
 const babelify  = require('babelify').configure({
     presets: ['es2015']
 })
-
-const argv = require('yargs').argv;
 
 const entry = './source/index.js'
 const outfile = 'bundle.js'
@@ -19,11 +20,15 @@ const outfile = 'bundle.js'
 gulp.task('sass', function() {
     gulp.src('./source/sass/global.scss')
         .pipe(sass().on('error', sass.logError))
+        .pipe(postcss([
+            require('autoprefixer')({ browsers: ['last 1 version'] }),
+            require('csswring')()
+        ]))
         .pipe(gulp.dest('./app'))
 })
 
-gulp.task('watch', ['sass'], function(cb) {
-    //watch SASS
+gulp.task('watch', ['sass'], function(callback) {
+    //watch sass
     watch(['source/sass/*.scss'], () => gulp.start('sass'))
 
     //dev server
@@ -36,7 +41,7 @@ gulp.task('watch', ['sass'], function(cb) {
         browserify: {
             transform: babelify
         }
-    }).on('exit', cb)
+    }).on('exit', callback)
 })
 
 //the distribution bundle task
@@ -47,7 +52,7 @@ gulp.task('bundle', ['sass'], function() {
 
     return bundler
         .pipe(source('index.js'))
-        .pipe(streamify(uglify()))
+        .pipe(stream(uglify()))
         .pipe(rename(outfile))
         .pipe(gulp.dest('./app'))
 })
