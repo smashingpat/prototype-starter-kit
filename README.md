@@ -25,6 +25,7 @@ This starts a watch server and open `localhost:9966` in your default browser. Ch
 npm run start   # start dev server
 npm run open    # start dev server and open in default browser
 npm run bundle  # build compressed files
+npm run deploy  # build compressed files and copies contents app folder to subtree gh-pages
 ```
 
 [budo]: https://github.com/mattdesl/budo
