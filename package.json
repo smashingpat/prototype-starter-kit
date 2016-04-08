@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "gulp watch",
+    "open": "gulp watch --open",
     "bundle": "gulp bundle"
   },
   "keywords": [

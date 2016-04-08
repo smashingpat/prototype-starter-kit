@@ -8,7 +8,10 @@ A quick boilerplate for prototyping javascript using [budõ][budo], [Gulp][gulp]
 # install dependencies
 npm install
 
-#start development server, optionally can open automatically in your browser
+# start development server and open in default browser
+npm run open
+
+# or just start the server
 npm start
 
 # bundle sass and javascript using browserify
@@ -20,6 +23,7 @@ This starts a watch server and open `localhost:9966` in your default browser. Ch
 ## Tasks
 ```sh
 npm run start   # start dev server
+npm run open    # start dev server and open in default browser
 npm run bundle  # build compressed files
 ```
 
