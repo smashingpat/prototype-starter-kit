@@ -28,23 +28,22 @@ gulp.task('sass', function() {
 })
 
 gulp.task('watch', ['sass'], function(callback) {
-    //watch sass
+    // watch sass
     watch(['source/sass/*.scss'], () => gulp.start('sass'))
 
-    //dev server
+    // dev server
     budo(entry, {
         serve: outfile,
-        stream: process.stdout,
         live: true,
         dir: 'app',
         open: argv.open,
         browserify: {
             transform: babelify
-        }
+        },
+        stream: process.stdout
     }).on('exit', callback)
 })
 
-//the distribution bundle task
 gulp.task('bundle', ['sass'], function() {
     var bundler = browserify(entry, {
         transform: babelify
