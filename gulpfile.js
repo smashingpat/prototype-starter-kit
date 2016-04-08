@@ -29,7 +29,7 @@ gulp.task('sass', function() {
 
 gulp.task('watch', ['sass'], function(callback) {
     // watch sass
-    watch(['source/sass/*.scss'], () => gulp.start('sass'))
+    watch(['source/sass/*.{scss,sass}'], () => gulp.start('sass'))
 
     // dev server
     budo(entry, {
