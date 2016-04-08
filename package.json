@@ -1,5 +1,5 @@
 {
-  "name": "quick-prototyping",
+  "name": "prototype-starter-kit",
   "version": "1.0.0",
   "description": "a starter kit with SASS, Gulp and Budo for quick prototyping",
   "main": "index.js",
