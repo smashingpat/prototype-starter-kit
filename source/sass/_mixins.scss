@@ -25,9 +25,9 @@
     Add easy Media queries
 ------------------------------------ */
 
-$media-desktop:992px;
-$media-tablet: 767px;
-$media-mobile: 480px;
+$media-desktop: 992px;
+$media-tablet:  767px;
+$media-mobile:  480px;
 
 @function translate-media-conditions($c) {
     $conditionsMap: (

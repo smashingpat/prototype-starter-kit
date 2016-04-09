@@ -1,9 +1,6 @@
 @import 'normalize';
 @import 'mixins';
 
-*,*:after,*:before {
+*, *:after, *:before {
     box-sizing: border-box;
 }
-
-html,
-body {}
