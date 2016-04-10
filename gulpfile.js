@@ -45,7 +45,7 @@ gulp.task('watch', ['sass'], function(callback) {
     }).on('exit', callback)
 })
 
-gulp.task('bundle', ['sass'], function() {
+gulp.task('script', function() {
     var bundler = browserify(entry, {
         transform: babelify
     }).bundle()
@@ -56,3 +56,5 @@ gulp.task('bundle', ['sass'], function() {
         .pipe(rename(outfile))
         .pipe(gulp.dest('./app'))
 })
+
+gulp.task('bundle', ['sass', 'script'])
