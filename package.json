@@ -6,7 +6,7 @@
   "scripts": {
     "start": "gulp watch",
     "open": "gulp watch --open",
-    "bundle": "gulp bundle",
+    "bundle": "gulp bundle --production",
     "deploy": "gulp bundle && git subtree push --prefix app origin gh-pages"
   },
   "keywords": [
@@ -24,6 +24,7 @@
     "budo": "^8.1.0",
     "csswring": "^4.2.2",
     "gulp": "^3.9.1",
+    "gulp-if": "^2.0.0",
     "gulp-postcss": "^6.1.0",
     "gulp-rename": "^1.2.2",
     "gulp-sass": "^2.2.0",

@@ -1,5 +1,6 @@
 const gulp = require('gulp')
 const watch = require('gulp-watch')
+const gulpif = require('gulp-if')
 const sass = require('gulp-sass')
 const postcss = require('gulp-postcss')
 
@@ -52,7 +53,7 @@ gulp.task('script', function() {
 
     return bundler
         .pipe(source('index.js'))
-        .pipe(stream(uglify()))
+        .pipe(gulpif(argv.production, stream(uglify())))
         .pipe(rename(outfile))
         .pipe(gulp.dest('./app'))
 })
