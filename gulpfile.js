@@ -12,7 +12,7 @@ const stream = require('gulp-streamify')
 const source = require('vinyl-source-stream')
 const browserify = require('browserify')
 const babelify  = require('babelify').configure({
-    presets: ['es2015']
+    presets: ['es2015', 'react']
 })
 
 const entry = './source/index.js'
