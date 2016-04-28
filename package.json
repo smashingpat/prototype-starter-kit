@@ -34,11 +34,5 @@
     "gulp-watch": "^4.3.5",
     "vinyl-source-stream": "^1.1.0",
     "yargs": "^4.4.0"
-  },
-  "dependencies": {
-    "axios": "^0.10.0",
-    "react": "^15.0.1",
-    "react-dom": "^15.0.1",
-    "yamljs": "^0.2.7"
   }
 }
