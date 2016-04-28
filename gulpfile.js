@@ -22,6 +22,11 @@ gulp.task('sass', function() {
     gulp.src('./source/sass/global.scss')
         .pipe(sass().on('error', sass.logError))
         .pipe(postcss([
+            require('postcss-assets')({
+                loadPaths: ['**'],
+                basePath: './app',
+                cachebuster: true
+            }),
             require('autoprefixer')({ browsers: ['last 1 version'] }),
             require('csswring')()
         ]))
