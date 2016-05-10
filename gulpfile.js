@@ -19,7 +19,7 @@ const entry = './source/index.js'
 const outfile = 'bundle.js'
 
 gulp.task('sass', function() {
-    gulp.src('./source/sass/global.scss')
+    gulp.src('./source/sass/global.sass')
         .pipe(sass().on('error', sass.logError))
         .pipe(postcss([
             require('postcss-assets')({
