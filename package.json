@@ -7,7 +7,7 @@
     "start": "gulp watch",
     "open": "gulp watch --open",
     "bundle": "gulp bundle --production",
-    "deploy": "gulp bundle && git subtree push --prefix app origin gh-pages"
+    "deploy": "gulp bundle && git subtree push --prefix site origin gh-pages"
   },
   "keywords": [
     "html",
