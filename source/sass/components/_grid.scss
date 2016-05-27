@@ -1,0 +1,42 @@
+/*
+
+grid
+----
+
+==================================== */
+
+.grid {
+    display: flex;
+
+    > * {
+        flex: 1;
+        flex-grow: 4;
+        padding: $gutter;
+
+        &:first-child { margin-left: -#{$gutter}; }
+        &:last-child { margin-right: -#{$gutter}; }
+    }
+
+    .column-small { flex-grow: 2; }
+    .column-large { flex-grow: 8; }
+}
+
+/*
+
+wrapper
+-------
+
+==================================== */
+
+.wrapper {
+    max-width: 960px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: $spacing;
+    padding-left: $gutter;
+    padding-right: $gutter;
+
+    &--small  { max-width: 640px; }
+    &--large  { max-width: 1140px; }
+    &--full { max-width: none; }
+}
