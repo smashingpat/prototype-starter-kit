@@ -4,6 +4,6 @@
 
 $gutter: 1rem;
 
-$spacing-large: 4.8rem;
-$spacing: 2.4rem;
-$spacing-small: 1.2rem;
+$spacing-large: #{$line-height * 2 + 'rem'};
+$spacing: #{$line-height + 'rem'};
+$spacing-small: #{$line-height / 2 + 'rem'};
