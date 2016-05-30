@@ -1,4 +1,5 @@
 const gulp = require('gulp')
+const plumber = require('gulp-plumber')
 const watch = require('gulp-watch')
 const gulpif = require('gulp-if')
 const sass = require('gulp-sass')
@@ -20,7 +21,8 @@ const outfile = 'bundle.js'
 
 gulp.task('sass', function() {
     gulp.src('./source/sass/global.scss')
-        .pipe(sass().on('error', sass.logError))
+        .pipe(plumber())
+        .pipe(sass())
         .pipe(postcss([
             require('postcss-assets')({
                 loadPaths: ['**'],
