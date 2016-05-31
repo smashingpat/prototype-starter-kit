@@ -22,18 +22,12 @@
     "babel-preset-es2015": "*",
     "babel-preset-react": "*",
     "babelify": "*",
-<<<<<<< HEAD
-=======
     "browserify": "^13.0.1",
->>>>>>> ec6f3f15a8d12f01a89e6e07bb3447c8131e7ae6
     "budo": "*",
     "csswring": "*",
     "gulp": "*",
     "gulp-if": "*",
-<<<<<<< HEAD
     "gulp-plumber": "^1.1.0",
-=======
->>>>>>> ec6f3f15a8d12f01a89e6e07bb3447c8131e7ae6
     "gulp-postcss": "*",
     "gulp-rename": "*",
     "gulp-sass": "*",
