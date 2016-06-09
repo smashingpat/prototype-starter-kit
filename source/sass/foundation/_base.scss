@@ -13,10 +13,10 @@ body {
     line-height: $line-height;
     min-height: 100%;
     position: relative;
+    overflow-y: scroll;
 }
 
 
-// Chrome scrollbar
 ::-webkit-scrollbar {
     width: 16px;
 }
