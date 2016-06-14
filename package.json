@@ -37,8 +37,5 @@
     "postcss-assets": "*",
     "vinyl-source-stream": "*",
     "yargs": "*"
-  },
-  "dependencies": {
-    "jquery": "^2.2.4"
   }
 }
