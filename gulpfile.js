@@ -28,13 +28,13 @@ gulp.task('sass', function() {
         .pipe(postcss([
             require('postcss-assets')({
                 loadPaths: ['**'],
-                basePath: './site',
+                basePath: './app',
                 cachebuster: true
             }),
             require('autoprefixer')({ browsers: ['last 1 version'] }),
             require('csswring')()
         ]))
-        .pipe(gulp.dest('./site'))
+        .pipe(gulp.dest('./app'))
 })
 
 gulp.task('watch', ['sass'], function(callback) {
@@ -44,7 +44,7 @@ gulp.task('watch', ['sass'], function(callback) {
         serve: outfile,
         port: 3000,
         live: true,
-        dir: './site',
+        dir: './app',
         open: argv.open,
         browserify: {
             transform: babelify
@@ -54,7 +54,7 @@ gulp.task('watch', ['sass'], function(callback) {
 
     // watch files
     watch(['source/sass/**/*.{scss,sass}'], () => gulp.start('sass'))
-    watch(['./site/**/*.{html,json}'], () => server.reload())
+    watch(['./app/**/*.{html,json}'], () => server.reload())
 
 })
 
@@ -67,7 +67,7 @@ gulp.task('script', function() {
         .pipe(source('index.js'))
         .pipe(gulpif(argv.production, stream(uglify())))
         .pipe(rename(outfile))
-        .pipe(gulp.dest('./site'))
+        .pipe(gulp.dest('./app'))
 })
 
 gulp.task('bundle', ['sass', 'script'])
