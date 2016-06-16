@@ -42,7 +42,7 @@ gulp.task('watch', ['sass'], function(callback) {
     // dev server
     let server = budo(entry, {
         serve: outfile,
-        port: 3000,
+        port: argv.port ? argv.port : 3000,
         live: true,
         dir: './app',
         open: argv.open,
