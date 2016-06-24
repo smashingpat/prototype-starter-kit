@@ -3,7 +3,7 @@
     --------
 
     Adds clearfix to the element
------------------------------------- */
+============================================================================= */
 
 @mixin clearfix() {
     &:after {
@@ -23,7 +23,7 @@
     -----------
 
     Add easy Media queries
------------------------------------- */
+============================================================================= */
 
 $media-desktop: 992px;
 $media-tablet:  767px;
@@ -49,7 +49,8 @@ $media-mobile:  480px;
 @mixin media($args...) {
     $query: "";
 
-    // Loops through all $arguments passed, and if more then one is found add " and " between them
+    // Loops through all $arguments passed,
+    // and if more then one is found add " and " between them
     @each $arg in $args {
         $op: "";
         @if ( $query != "" ) {
