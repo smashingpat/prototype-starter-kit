@@ -9,7 +9,8 @@
     > * {
         flex: 1;
         flex-grow: 4;
-        padding: $gutter;
+        padding-left: $gutter;
+        padding-right: $gutter;
 
         &:first-child { margin-left: -#{$gutter}; }
         &:last-child { margin-right: -#{$gutter}; }

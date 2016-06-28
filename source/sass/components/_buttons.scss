@@ -8,13 +8,14 @@ button,
     background: $gray1;
     color: $white;
     padding: .5rem 1.5rem;
-    border: none;
+    border: 1px solid $gray1;
     font-weight: bold;
     transition: 150ms ease-in-out;
     transition-property: background, color;
 
     &:hover {
         background: $c-primairy;
+        border-color: $c-primairy;
     }
 
     &:active {
@@ -23,6 +24,14 @@ button,
 
     &:focus {
         outline: none;
-        border-color: $c-primairy;
+        background-color: $gray2;
+        border-color: $gray2;
     }
+}
+
+input {
+    padding: .5rem 1.5rem;
+    border: 0;
+    background: white;
+    border: 1px solid $gray5;
 }
