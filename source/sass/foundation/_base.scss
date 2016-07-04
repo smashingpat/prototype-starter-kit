@@ -19,15 +19,3 @@ body {
     min-height: 100%;
     position: relative;
 }
-
-
-// Chrome scrollbar
-::-webkit-scrollbar {
-    width: 16px;
-}
-
-::-webkit-scrollbar-thumb {
-    background: $gray3;
-    border: 4px solid transparent;
-    background-clip: content-box;
-}
