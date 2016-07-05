@@ -15,28 +15,3 @@
 @import 'foundation/print';
 @import 'components/grid';
 @import 'components/buttons';
-
-
-#box {
-    display: block;
-    width: 200px;
-    height: 200px;
-    background: red;
-    transform-origin: top center;
-
-    &.active {
-        background: green;
-        animation: hide 1s forwards;
-    }
-}
-
-@keyframes hide {
-    0% {
-        opacity: 1;
-        transform: none;
-    }
-    100% {
-        opacity: 0;
-        height: 0;
-    }
-}
