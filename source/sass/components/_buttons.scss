@@ -7,7 +7,8 @@ button,
 .button {
     background: $gray1;
     color: $white;
-    padding: .5rem 1.5rem;
+    padding: .1em 1em;
+    border-radius: .1em;
     border: 1px solid $gray1;
     font-weight: bold;
     transition: 150ms ease-in-out;
