@@ -5,13 +5,18 @@
     Imports all partials for the global styling used on all pages
 ============================================================================= */
 
+// variables
 @import 'variables/typo';
 @import 'variables/colors';
 @import 'variables/spacings';
+// helpers
 @import 'helpers/reset';
 @import 'helpers/mixins';
+// foundation
 @import 'foundation/base';
 @import 'foundation/typography';
 @import 'foundation/print';
+// components
 @import 'components/grid';
+@import 'components/forms';
 @import 'components/buttons';

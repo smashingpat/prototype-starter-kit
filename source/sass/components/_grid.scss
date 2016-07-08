@@ -3,21 +3,25 @@
     ----
 ============================================================================= */
 
-.grid {
-    display: flex;
+.Grid {
+    @include media('>tablet') {
+        display: flex;
+    }
 
     > * {
-        flex: 1;
-        flex-grow: 4;
         padding-left: $gutter;
         padding-right: $gutter;
 
-        &:first-child { margin-left: -#{$gutter}; }
-        &:last-child { margin-right: -#{$gutter}; }
+        @include media('>tablet') {
+            flex: 1;
+            flex-grow: 4;
+            &:first-child { margin-left: -#{$gutter}; }
+            &:last-child { margin-right: -#{$gutter}; }
+        }
     }
 
-    .column-small { flex-grow: 2; }
-    .column-large { flex-grow: 8; }
+    &-column--small { flex-grow: 2; }
+    &-column--large { flex-grow: 8; }
 }
 
 /*
@@ -25,7 +29,7 @@
     -------
 ============================================================================= */
 
-.wrapper {
+.Wrapper {
     max-width: 960px;
     margin-left: auto;
     margin-right: auto;
@@ -35,5 +39,5 @@
 
     &--small  { max-width: 640px; }
     &--large  { max-width: 1140px; }
-    &--full { max-width: none; }
+    &--full   { max-width: none; }
 }
