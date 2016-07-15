@@ -4,6 +4,7 @@ const gulp = require('gulp')
 const plumber = require('gulp-plumber')
 const watch = require('gulp-watch')
 const gulpif = require('gulp-if')
+const jade = require('gulp-jade')
 const sass = require('gulp-sass')
 const postcss = require('gulp-postcss')
 const budo = require('budo')
@@ -20,6 +21,17 @@ const babelify  = require('babelify').configure({
 const entry = './source/index.js'
 const outfile = 'bundle.js'
 
+gulp.task('jade', function() {
+    gulp.src([
+        './source/jade/**/*.jade',
+        '!./source/jade/layouts/**/*.jade',
+        '!./source/jade/includes/**/*.jade'
+    ])
+    .pipe(jade({
+        pretty: true
+    }))
+    .pipe(gulp.dest('./app'))
+})
 
 gulp.task('sass', function() {
     gulp.src('./source/sass/global.scss')
@@ -54,7 +66,8 @@ gulp.task('watch', ['sass'], function(callback) {
 
     // watch files
     watch(['source/sass/**/*.{scss,sass}'], () => gulp.start('sass'))
-    watch(['./app/**/*.{html,json}'], () => server.reload())
+    watch(['source/jade/**/*.jade'], () => gulp.start('jade'))
+    // watch(['./app/**/*.{html,json}'], () => server.reload())
 
 })
 

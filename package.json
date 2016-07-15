@@ -27,6 +27,7 @@
     "csswring": "*",
     "gulp": "*",
     "gulp-if": "*",
+    "gulp-jade": "^1.1.0",
     "gulp-plumber": "^1.1.0",
     "gulp-postcss": "*",
     "gulp-rename": "*",
