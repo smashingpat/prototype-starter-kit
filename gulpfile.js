@@ -27,6 +27,7 @@ gulp.task('jade', function() {
         '!./source/jade/layouts/**/*.jade',
         '!./source/jade/includes/**/*.jade'
     ])
+    .pipe(plumber())
     .pipe(jade({
         pretty: true
     }))
@@ -83,4 +84,4 @@ gulp.task('script', function() {
         .pipe(gulp.dest('./app'))
 })
 
-gulp.task('bundle', ['sass', 'script'])
+gulp.task('bundle', ['jade', 'sass', 'script'])
