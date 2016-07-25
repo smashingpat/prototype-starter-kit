@@ -79,7 +79,16 @@ gulp.task('script', function() {
 
     return bundler
         .pipe(source('index.js'))
-        .pipe(gulpif(argv.production, stream(uglify())))
+        .pipe(gulpif(argv.production, stream(uglify({
+            output: {
+                beautify: argv.beautify ? true : false
+            },
+            compress: {
+                global_defs: {
+                    __DEV__: false
+                }
+            }
+        }))))
         .pipe(rename(outfile))
         .pipe(gulp.dest('./app'))
 })
