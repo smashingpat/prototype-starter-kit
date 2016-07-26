@@ -41,3 +41,20 @@
     &--large  { max-width: 1140px; }
     &--full   { max-width: none; }
 }
+
+/*
+    full width
+    ----------
+
+    component that's able to break out the containers width and extend all
+    the way to the screen edges
+============================================================================= */
+
+.FullWidth {
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+}
