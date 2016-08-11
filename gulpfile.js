@@ -15,7 +15,8 @@ const stream = require('gulp-streamify')
 const source = require('vinyl-source-stream')
 const browserify = require('browserify')
 const babelify  = require('babelify').configure({
-    presets: ['es2015', 'react']
+    presets: ['es2015', 'react'],
+    plugins: ['transform-object-rest-spread']
 })
 
 const entry = './source/index.js'
