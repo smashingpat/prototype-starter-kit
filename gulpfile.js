@@ -94,7 +94,7 @@ const tasks = {
 
         // watch files
         watch(['source/sass/**/*.{scss,sass}'], tasks.sass)
-        watch(['source/jade/**/*.jade'], () tasks.jade)
+        watch(['source/jade/**/*.jade'], tasks.jade)
 
     },
 }
