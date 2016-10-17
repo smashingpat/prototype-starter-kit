@@ -15,14 +15,16 @@ const rename = require('gulp-rename')
 const stream = require('gulp-streamify')
 const source = require('vinyl-source-stream')
 const browserify = require('browserify')
-const babelify  = require('babelify').configure({
-    presets: ['es2015', 'react'],
-    plugins: ['transform-object-rest-spread']
-})
+const babelify  = require('babelify')
 
 const entry = './source/index.js'
 const outfile = 'bundle.js'
-
+const browserifyConfig = {
+    transform: babelify.configure({
+        presets: ['es2015', 'react'],
+        plugins: ['transform-object-rest-spread']
+    })
+}
 const tasks = {
     jade: function jadeTask() {
 
@@ -59,9 +61,7 @@ const tasks = {
     },
     script: function scriptTask() {
 
-        var bundler = browserify(entry, {
-            transform: babelify
-        }).bundle()
+        var bundler = browserify(entry, browserifyConfig).bundle()
 
         return bundler
             .pipe(source('index.js'))
@@ -88,9 +88,7 @@ const tasks = {
             live: true,
             dir: './app',
             open: argv.open,
-            browserify: {
-                transform: babelify
-            },
+            browserify: browserifyConfig,
             stream: process.stdout
         }).on('exit', callback)
 
