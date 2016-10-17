@@ -37,7 +37,7 @@ gulp.task('jade', function() {
 })
 
 gulp.task('sass', function() {
-    gulp.src('./source/sass/global.scss')
+    return gulp.src('./source/sass/global.scss')
         .pipe(plumber())
         .pipe(gulpif(!argv.production, sourcemaps.init()))
             .pipe(sass())
