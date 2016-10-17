@@ -2,6 +2,7 @@
 
 const gulp = require('gulp')
 const plumber = require('gulp-plumber')
+const sourcemaps = require('gulp-sourcemaps')
 const watch = require('gulp-watch')
 const gulpif = require('gulp-if')
 const jade = require('gulp-jade')
@@ -38,16 +39,18 @@ gulp.task('jade', function() {
 gulp.task('sass', function() {
     gulp.src('./source/sass/global.scss')
         .pipe(plumber())
-        .pipe(sass())
-        .pipe(postcss([
-            require('postcss-assets')({
-                loadPaths: ['**'],
-                basePath: './app',
-                cachebuster: true
-            }),
-            require('autoprefixer')({ browsers: ['last 1 version'] }),
-            require('csswring')()
-        ]))
+        .pipe(gulpif(!argv.production, sourcemaps.init()))
+            .pipe(sass())
+            .pipe(postcss([
+                require('postcss-assets')({
+                    loadPaths: ['**'],
+                    basePath: './app',
+                    cachebuster: true
+                }),
+                require('autoprefixer')({ browsers: ['last 1 version'] }),
+                require('csswring')()
+            ]))
+        .pipe(gulpif(!argv.production, sourcemaps.write()))
         .pipe(gulp.dest('./app'))
 })
 
@@ -69,8 +72,6 @@ gulp.task('watch', ['sass'], function(callback) {
     // watch files
     watch(['source/sass/**/*.{scss,sass}'], () => gulp.start('sass'))
     watch(['source/jade/**/*.jade'], () => gulp.start('jade'))
-    // watch(['./app/**/*.{html,json}'], () => server.reload())
-
 })
 
 gulp.task('script', function() {
