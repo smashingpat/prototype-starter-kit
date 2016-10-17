@@ -25,6 +25,7 @@ const outfile = 'bundle.js'
 
 const tasks = {
     jade: function jadeTask() {
+
         return gulp.src([
             './source/jade/**/*.jade',
             '!./source/jade/layouts/**/*.jade',
@@ -35,8 +36,10 @@ const tasks = {
             pretty: true
         }))
         .pipe(gulp.dest('./app'))
+
     },
     sass: function sassTask() {
+
         return gulp.src('./source/sass/global.scss')
             .pipe(plumber())
             .pipe(gulpif(!argv.production, sourcemaps.init()))
@@ -52,8 +55,10 @@ const tasks = {
                 ]))
             .pipe(gulpif(!argv.production, sourcemaps.write()))
             .pipe(gulp.dest('./app'))
+
     },
     script: function scriptTask() {
+
         var bundler = browserify(entry, {
             transform: babelify
         }).bundle()
@@ -72,8 +77,10 @@ const tasks = {
             }))))
             .pipe(rename(outfile))
             .pipe(gulp.dest('./app'))
+
     },
     server: function createServer(callback) {
+
         // dev server
         let server = budo(entry, {
             serve: outfile,
@@ -88,8 +95,9 @@ const tasks = {
         }).on('exit', callback)
 
         // watch files
-        watch(['source/sass/**/*.{scss,sass}'], () => gulp.start('sass'))
-        watch(['source/jade/**/*.jade'], () => gulp.start('jade'))
+        watch(['source/sass/**/*.{scss,sass}'], tasks.sass)
+        watch(['source/jade/**/*.jade'], () tasks.jade)
+
     },
 }
 
