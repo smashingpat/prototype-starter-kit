@@ -8,6 +8,8 @@ node_modules
 *.exe
 *.o
 *.so
+app/index.html
+app/global.css
 
 # Packages #
 ############
