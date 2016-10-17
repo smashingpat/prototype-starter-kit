@@ -23,76 +23,79 @@ const babelify  = require('babelify').configure({
 const entry = './source/index.js'
 const outfile = 'bundle.js'
 
-gulp.task('jade', function() {
-    gulp.src([
-        './source/jade/**/*.jade',
-        '!./source/jade/layouts/**/*.jade',
-        '!./source/jade/includes/**/*.jade'
-    ])
-    .pipe(plumber())
-    .pipe(jade({
-        pretty: true
-    }))
-    .pipe(gulp.dest('./app'))
-})
-
-gulp.task('sass', function() {
-    return gulp.src('./source/sass/global.scss')
+const tasks = {
+    jade: function jadeTask() {
+        return gulp.src([
+            './source/jade/**/*.jade',
+            '!./source/jade/layouts/**/*.jade',
+            '!./source/jade/includes/**/*.jade'
+        ])
         .pipe(plumber())
-        .pipe(gulpif(!argv.production, sourcemaps.init()))
-            .pipe(sass())
-            .pipe(postcss([
-                require('postcss-assets')({
-                    loadPaths: ['**'],
-                    basePath: './app',
-                    cachebuster: true
-                }),
-                require('autoprefixer')({ browsers: ['last 1 version'] }),
-                require('csswring')()
-            ]))
-        .pipe(gulpif(!argv.production, sourcemaps.write()))
+        .pipe(jade({
+            pretty: true
+        }))
         .pipe(gulp.dest('./app'))
-})
-
-gulp.task('watch', ['sass'], function(callback) {
-
-    // dev server
-    let server = budo(entry, {
-        serve: outfile,
-        port: argv.port ? argv.port : 3000,
-        live: true,
-        dir: './app',
-        open: argv.open,
-        browserify: {
+    },
+    sass: function sassTask() {
+        return gulp.src('./source/sass/global.scss')
+            .pipe(plumber())
+            .pipe(gulpif(!argv.production, sourcemaps.init()))
+                .pipe(sass())
+                .pipe(postcss([
+                    require('postcss-assets')({
+                        loadPaths: ['**'],
+                        basePath: './app',
+                        cachebuster: true
+                    }),
+                    require('autoprefixer')({ browsers: ['last 1 version'] }),
+                    require('csswring')()
+                ]))
+            .pipe(gulpif(!argv.production, sourcemaps.write()))
+            .pipe(gulp.dest('./app'))
+    },
+    script: function scriptTask() {
+        var bundler = browserify(entry, {
             transform: babelify
-        },
-        stream: process.stdout
-    }).on('exit', callback)
+        }).bundle()
 
-    // watch files
-    watch(['source/sass/**/*.{scss,sass}'], () => gulp.start('sass'))
-    watch(['source/jade/**/*.jade'], () => gulp.start('jade'))
-})
-
-gulp.task('script', function() {
-    var bundler = browserify(entry, {
-        transform: babelify
-    }).bundle()
-
-    return bundler
-        .pipe(source('index.js'))
-        .pipe(gulpif(argv.production, stream(uglify({
-            output: {
-                beautify: argv.beautify ? true : false
-            },
-            compress: {
-                global_defs: {
-                    __DEV__: false
+        return bundler
+            .pipe(source('index.js'))
+            .pipe(gulpif(argv.production, stream(uglify({
+                output: {
+                    beautify: argv.beautify ? true : false
+                },
+                compress: {
+                    global_defs: {
+                        __DEV__: false
+                    }
                 }
-            }
-        }))))
-        .pipe(rename(outfile))
-        .pipe(gulp.dest('./app'))
-})
+            }))))
+            .pipe(rename(outfile))
+            .pipe(gulp.dest('./app'))
+    },
+    server: function createServer(callback) {
+        // dev server
+        let server = budo(entry, {
+            serve: outfile,
+            port: argv.port ? argv.port : 3000,
+            live: true,
+            dir: './app',
+            open: argv.open,
+            browserify: {
+                transform: babelify
+            },
+            stream: process.stdout
+        }).on('exit', callback)
 
+        // watch files
+        watch(['source/sass/**/*.{scss,sass}'], () => gulp.start('sass'))
+        watch(['source/jade/**/*.jade'], () => gulp.start('jade'))
+    },
+}
+
+gulp.task('jade', tasks.jade)
+gulp.task('sass', tasks.sass)
+gulp.task('script', tasks.script)
+
+gulp.task('watch', ['jade', 'sass'], tasks.server)
 gulp.task('bundle', ['jade', 'sass', 'script'])
