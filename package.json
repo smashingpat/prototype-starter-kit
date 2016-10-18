@@ -36,6 +36,7 @@
     "gulp-sourcemaps": "^2.1.1",
     "gulp-streamify": "*",
     "gulp-uglify": "*",
+    "gulp-util": "^3.0.7",
     "gulp-watch": "*",
     "postcss-assets": "*",
     "vinyl-source-stream": "*",
