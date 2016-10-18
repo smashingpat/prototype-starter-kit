@@ -1,10 +1,11 @@
 'use strict'
 
 const gulp = require('gulp')
+const gulpif = require('gulp-if')
+const gutil = require('gulp-util')
 const plumber = require('gulp-plumber')
 const sourcemaps = require('gulp-sourcemaps')
 const watch = require('gulp-watch')
-const gulpif = require('gulp-if')
 const jade = require('gulp-jade')
 const sass = require('gulp-sass')
 const postcss = require('gulp-postcss')
@@ -17,14 +18,22 @@ const source = require('vinyl-source-stream')
 const browserify = require('browserify')
 const babelify  = require('babelify')
 
+
+
 const entry = './source/index.js'
 const outfile = 'bundle.js'
+
 const browserifyConfig = {
     transform: babelify.configure({
         presets: ['es2015', 'react'],
         plugins: ['transform-object-rest-spread']
     })
 }
+
+const middleware = (request, response, next) => {
+    next()
+}
+
 const tasks = {
     jade: function jadeTask() {
 
@@ -68,11 +77,6 @@ const tasks = {
             .pipe(gulpif(argv.production, stream(uglify({
                 output: {
                     beautify: argv.beautify ? true : false
-                },
-                compress: {
-                    global_defs: {
-                        __DEV__: false
-                    }
                 }
             }))))
             .pipe(rename(outfile))
@@ -89,6 +93,7 @@ const tasks = {
             dir: './app',
             open: argv.open,
             browserify: browserifyConfig,
+            middleware: middleware,
             stream: process.stdout
         }).on('exit', callback)
 
