@@ -17,6 +17,8 @@ const source = require('vinyl-source-stream')
 const browserify = require('browserify')
 const babelify  = require('babelify')
 
+
+
 const entry = './source/index.js'
 const outfile = 'bundle.js'
 
@@ -26,6 +28,8 @@ const browserifyConfig = {
         plugins: ['transform-object-rest-spread']
     })
 }
+
+
 
 const tasks = {
     jade: function jadeTask() {
