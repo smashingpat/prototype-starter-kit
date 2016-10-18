@@ -19,12 +19,14 @@ const babelify  = require('babelify')
 
 const entry = './source/index.js'
 const outfile = 'bundle.js'
+
 const browserifyConfig = {
     transform: babelify.configure({
         presets: ['es2015', 'react'],
         plugins: ['transform-object-rest-spread']
     })
 }
+
 const tasks = {
     jade: function jadeTask() {
 
