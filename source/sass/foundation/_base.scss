@@ -11,10 +11,6 @@ html {
     font-size: $font-size;
     height: 100%;
 
-    &:after {
-        content: '#{18 * 16}';
-    }
-
     @include media('screen', '<tablet') {
         font-size: #{$font-size * 1.1};
     }
