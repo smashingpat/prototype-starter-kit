@@ -24,7 +24,8 @@ $c-accent       : #e5c07b;
 $c-foreground   : #282c34;
 $c-background   : #edf0f5;
 
-$c-text         : $gray1;
+$c-text         : rgba($black, .8);
+$c-text--invert : rgba($white, .8);
 $c-link         : $c-primairy;
 $c-link-hover   : darken($c-link, 5%);
 $c-link-visited : darken($c-link, 10%);
