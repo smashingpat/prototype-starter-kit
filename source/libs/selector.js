@@ -26,11 +26,16 @@ function selector(selectors, parent = document) {
     ------------------------------------ */
 
     function getNodes() {
-        nodes = chop.call(parent.querySelectorAll(selectors));
+        // nodes = chop.call(parent.querySelectorAll(selectors));
+        nodes = parent.querySelectorAll(selectors);
     }
 
     function eachNode(callback) {
-        nodes.map(node => callback(node));
+        // nodes.map(node => callback(node));
+        let i = 0;
+        for (let i = 0; i < nodes.length; i++) {
+            callback(nodes[i])
+        }
 
         return this;
     }
