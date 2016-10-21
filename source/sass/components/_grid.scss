@@ -60,3 +60,20 @@
     margin-left: -50vw;
     margin-right: -50vw;
 }
+
+
+/*
+    Center content
+    --------------
+
+    Center content using Flexbox
+============================================================================= */
+.CenterContent {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+
+    &-wrapper {}
+}

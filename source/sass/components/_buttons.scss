@@ -6,17 +6,16 @@
 button,
 .Button {
     background: $gray1;
-    color: $white;
-    padding: .1em 1em;
-    border-radius: .1em;
     border: 1px solid $gray1;
+    color: $white;
+    padding: .32em 1em;
+    border: none;
     font-weight: bold;
-    transition: 150ms ease-in-out;
+    transition: 50ms ease-in-out;
     transition-property: background, color;
 
     &:hover {
         background: $c-primairy;
-        border-color: $c-primairy;
     }
 
     &:active {
@@ -25,14 +24,19 @@ button,
 
     &:focus {
         outline: none;
-        background-color: $gray2;
-        border-color: $gray2;
+        background-color: darken($c-primairy, 5%);
     }
 }
 
 input {
-    padding: .5rem 1.5rem;
+    padding: .5em .8em;
+    margin: 0;
     border: 0;
     background: white;
-    border: 1px solid $gray5;
+    border: 1px solid $gray3;
+
+    &:focus {
+        outline: none;
+        border-color: $gray3;
+    }
 }

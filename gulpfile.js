@@ -6,7 +6,7 @@ const gutil = require('gulp-util')
 const plumber = require('gulp-plumber')
 const sourcemaps = require('gulp-sourcemaps')
 const watch = require('gulp-watch')
-const jade = require('gulp-jade')
+const pug = require('gulp-pug')
 const sass = require('gulp-sass')
 const postcss = require('gulp-postcss')
 const budo = require('budo')
@@ -35,15 +35,15 @@ const middleware = (request, response, next) => {
 }
 
 const tasks = {
-    jade: function jadeTask() {
+    pug: function pugTask() {
 
         return gulp.src([
-            './source/jade/**/*.jade',
-            '!./source/jade/layouts/**/*.jade',
-            '!./source/jade/includes/**/*.jade'
+            './source/pug/**/*.pug',
+            '!./source/pug/layouts/**/*.pug',
+            '!./source/pug/includes/**/*.pug'
         ])
         .pipe(plumber())
-        .pipe(jade({
+        .pipe(pug({
             pretty: true
         }))
         .pipe(gulp.dest('./app'))
@@ -99,14 +99,14 @@ const tasks = {
 
         // watch files
         watch(['source/sass/**/*.{scss,sass}'], tasks.sass)
-        watch(['source/jade/**/*.jade'], tasks.jade)
+        watch(['source/pug/**/*.pug'], tasks.pug)
 
     },
 }
 
-gulp.task('jade', tasks.jade)
+gulp.task('pug', tasks.pug)
 gulp.task('sass', tasks.sass)
 gulp.task('script', tasks.script)
 
-gulp.task('watch', ['jade', 'sass'], tasks.server)
-gulp.task('bundle', ['jade', 'sass', 'script'])
+gulp.task('watch', ['pug', 'sass'], tasks.server)
+gulp.task('bundle', ['pug', 'sass', 'script'])
