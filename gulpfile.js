@@ -30,10 +30,6 @@ const browserifyConfig = {
     })
 }
 
-const middleware = (request, response, next) => {
-    next()
-}
-
 const tasks = {
     pug: function pugTask() {
 
@@ -93,7 +89,6 @@ const tasks = {
             dir: './app',
             open: argv.open,
             browserify: browserifyConfig,
-            middleware: middleware,
             stream: process.stdout
         }).on('exit', callback)
 
