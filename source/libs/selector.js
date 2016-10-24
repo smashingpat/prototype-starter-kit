@@ -121,6 +121,14 @@ function selector(selectors, parent = document) {
         return this;
     }
 
+    function addEventOnce(eventNames, callback) {
+        console.log('obj');
+        addEvents(eventNames, function singleEventHandler() {
+            callback()
+            removeEvents(eventNames, singleEventHandler)
+        })
+    }
+
 
     /*
         initialize
@@ -138,6 +146,7 @@ function selector(selectors, parent = document) {
         removeClass,
         toggleClass,
         on: addEvents,
+        once: addEventOnce,
         off: removeEvents,
         css: changeNodeCss,
         each: eachNode,

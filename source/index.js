@@ -1,9 +1,8 @@
 import select from './libs/selector'
 
 
-select('h1').each(element => {
-    select(element).on('click', (event) => {
-        console.log('event', event);
-        console.log('this', element);
-    })
-});
+let element = select('h1')
+
+element.once('click', function clickHandler() {
+    console.log('I got clicked');
+})
