@@ -17,24 +17,40 @@
 ============================================================================ */
 
 function selector(selectors, parent = document) {
+
+    let singleNode = false;
     let nodes;
-    const chop = Array.prototype.slice;
 
 
     /*
         Node
     ------------------------------------ */
 
+    function ifNode(node) {
+        return (
+            typeof HTMLElement === "object" ?
+                node instanceof HTMLElement : //DOM2
+                node && typeof node === "object" && node !== null && node.nodeType === 1 && typeof node.nodeName==="string"
+        )
+    }
+
     function getNodes() {
-        // nodes = chop.call(parent.querySelectorAll(selectors));
-        nodes = parent.querySelectorAll(selectors);
+        if (ifNode(selectors)) {
+            singleNode = true
+            nodes = selectors
+        } else {
+            nodes = parent.querySelectorAll(selectors);
+        }
     }
 
     function eachNode(callback) {
-        // nodes.map(node => callback(node));
-        let i = 0;
-        for (let i = 0; i < nodes.length; i++) {
-            callback(nodes[i])
+        if (!singleNode) {
+            let i = 0;
+            for (let i = 0; i < nodes.length; i++) {
+                callback(nodes[i])
+            }
+        } else {
+            callback(nodes)
         }
 
         return this;

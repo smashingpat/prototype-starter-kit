@@ -24,6 +24,7 @@
 
 h1 {
     transition: all 300ms ease-in-out;
+    transition-property: color, background-color, transform;
     transform: scale(1);
 }
 
