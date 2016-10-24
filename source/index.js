@@ -1,8 +1,10 @@
 import select from './libs/selector'
 
 
-let element = select('h1')
+let element = select('button')
 
-element.once('click', function clickHandler() {
-    console.log('I got clicked');
+element.on('click', function clickHandler(event) {
+    event.preventDefault()
+    console.log('I got clicked', element);
+    element.off('click', clickHandler);
 })
