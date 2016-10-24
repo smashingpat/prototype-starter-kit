@@ -18,6 +18,7 @@
 }
 
 
+
 /*
     Media Query
     -----------
@@ -59,6 +60,24 @@ $media-mobile:  480px;
         $query: $query + $op + translate-media-conditions($arg);
     }
     @media #{$query} { @content; }
+}
+
+
+
+/*
+    selection
+    ----------
+
+    Add styling to the selection
+============================================================================= */
+
+@mixin selection() {
+    &::selection {
+        @content;
+    }
+    &::-moz-selection {
+        @content;
+    }
 }
 
 

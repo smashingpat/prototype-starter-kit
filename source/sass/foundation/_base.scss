@@ -24,3 +24,8 @@ body {
     min-height: 100%;
     position: relative;
 }
+
+@include selection {
+    background: $c-accent;
+    color: $white;
+}
