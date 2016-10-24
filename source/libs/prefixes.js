@@ -29,18 +29,22 @@ const animations = {
     'animation': {
         start: 'animationstart',
         end: 'animationend',
+        iteration: 'animationiteration'
     },
     'WebkitAnimation': {
         start: 'webkitAnimationStart',
         end: 'webkitAnimationEnd',
+        iteration: 'webkitAnimationIteration'
     },
     'MozAnimation': {
         start: 'animationstart',
         end: 'animationend',
+        iteration: 'animationiteration'
     },
     'OAnimation': {
         start: 'oAnimationStart',
         end: 'oAnimationEnd',
+        iteration: 'oAnimationIteration'
     },
 }
 
