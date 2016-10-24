@@ -83,7 +83,13 @@ function selector(selectors, parent = document) {
 
     function addEvents(eventNames, callback) {
         eachNode(element => {
-            eventNames.split(' ').map(eventName => element.addEventListener(eventName, callback));
+            eventNames.split(' ').map(eventName => {
+                if (eventName) {
+                    return element.addEventListener(eventName, callback);
+                }
+
+                return false
+            });
         });
 
         return this;
