@@ -83,6 +83,33 @@ $media-mobile:  480px;
 
 
 /*
+    placeholder
+    ----------
+
+    Add styling to the placeholder of inputs
+============================================================================= */
+
+@mixin placeholder() {
+    &::-webkit-input-placeholder {
+        @content;
+    }
+
+    &:-moz-placeholder {
+        @content;
+    }
+
+    &::-moz-placeholder {
+        @content;
+    }
+
+    &:-ms-input-placeholder {
+        @content;
+    }
+}
+
+
+
+/*
     font-scale
     ----------
 
