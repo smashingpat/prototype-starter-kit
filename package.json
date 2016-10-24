@@ -1,6 +1,6 @@
 {
   "name": "prototype-starter-kit",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "a starter kit with SASS, Gulp and Budo for quick prototyping",
   "main": "index.js",
   "scripts": {
