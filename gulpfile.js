@@ -47,7 +47,9 @@ const tasks = {
         return gulp.src('./source/sass/global.scss')
             .pipe(plumber())
             .pipe(gulpif(!argv.production, sourcemaps.init()))
-                .pipe(sass())
+                .pipe(sass({
+                    outputStyle: 'expanded'
+                }))
                 .pipe(postcss([
                     require('postcss-assets')({
                         loadPaths: ['**'],
@@ -55,7 +57,12 @@ const tasks = {
                         cachebuster: true
                     }),
                     require('autoprefixer')({ browsers: ['last 1 version'] }),
-                    require('csswring')()
+                    require('cssnano')({
+                        core: argv.production ? true : false,
+                        discardComments: {
+                            removeAll: true
+                        }
+                    })
                 ]))
             .pipe(gulpif(!argv.production, sourcemaps.write()))
             .pipe(gulp.dest('./app'))
