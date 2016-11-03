@@ -5,24 +5,28 @@
 
 button,
 .Button {
+    position: relative;
+    padding: .32em 1em;
+    overflow: hidden;
+
+    font-weight: bold;
+
     background: $c-background;
     border: none;
     color: $c-text;
-    padding: .32em 1em;
     border: none;
-    font-weight: bold;
+    box-shadow: 0 0 0 1px rgba($gray1, .1);
+
     transition: 150ms ease-in-out;
     transition-property: transform, box-shadow, color, background-color;
-    box-shadow: 0 0 0 1px rgba($gray1, .15);
 
-    &:hover,
-    &:focus {
-        transform: translateY(-1px);
+    &:hover {
         box-shadow: 0 12px 50px -6px rgba($gray1, .3);
     }
 
     &:focus,
     &:active {
+        transform: translateY(-1px);
         outline: none;
         color: $white;
         background-color: darken($c-primairy, 5%);
