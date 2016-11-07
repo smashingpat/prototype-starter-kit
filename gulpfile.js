@@ -29,7 +29,7 @@ const browserifyConfig = {
 const tasks = {
     sass: function sassTask() {
 
-        return gulp.src('./source/sass/global.scss')
+        return gulp.src('./source/global.scss')
             .pipe(plumber())
             .pipe(gulpif(!argv.production, sourcemaps.init()))
                 .pipe(sass({
@@ -82,9 +82,7 @@ const tasks = {
         }).on('exit', callback)
 
         // watch files
-        watch(['source/sass/**/*.{scss,sass}'], tasks.sass)
-        watch(['source/*.pug'], tasks.pug)
-
+        watch(['source/**/*.{scss,sass}'], tasks.sass)
     },
 }
 
