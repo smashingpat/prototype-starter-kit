@@ -6,7 +6,6 @@ const gutil = require('gulp-util')
 const plumber = require('gulp-plumber')
 const sourcemaps = require('gulp-sourcemaps')
 const watch = require('gulp-watch')
-const pug = require('gulp-pug')
 const sass = require('gulp-sass')
 const postcss = require('gulp-postcss')
 const budo = require('budo')
@@ -28,20 +27,6 @@ const browserifyConfig = {
 }
 
 const tasks = {
-    pug: function pugTask() {
-
-        return gulp.src([
-            './source/pug/**/*.pug',
-            '!./source/pug/layouts/**/*.pug',
-            '!./source/pug/includes/**/*.pug'
-        ])
-        .pipe(plumber())
-        .pipe(pug({
-            pretty: true
-        }))
-        .pipe(gulp.dest('./app'))
-
-    },
     sass: function sassTask() {
 
         return gulp.src('./source/sass/global.scss')
@@ -98,14 +83,13 @@ const tasks = {
 
         // watch files
         watch(['source/sass/**/*.{scss,sass}'], tasks.sass)
-        watch(['source/pug/**/*.pug'], tasks.pug)
+        watch(['source/*.pug'], tasks.pug)
 
     },
 }
 
-gulp.task('pug', tasks.pug)
 gulp.task('sass', tasks.sass)
 gulp.task('script', tasks.script)
 
-gulp.task('watch', ['pug', 'sass'], tasks.server)
-gulp.task('bundle', ['pug', 'sass', 'script'])
+gulp.task('watch', ['sass'], tasks.server)
+gulp.task('bundle', ['sass', 'script'])
