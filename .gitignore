@@ -9,7 +9,7 @@ node_modules
 *.o
 *.so
 app/global.css
-app/bundle.js
+app/*.js
 
 # Packages #
 ############
