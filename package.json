@@ -24,6 +24,7 @@
     "babelify": "*",
     "browser-sync": "^2.17.5",
     "browserify": "^13.0.1",
+    "classnames": "^2.2.5",
     "cssnano": "^3.8.0",
     "event-stream": "^3.3.4",
     "gulp": "*",
@@ -40,6 +41,8 @@
     "postcss-assets": "*",
     "react": "^15.3.2",
     "react-dom": "^15.3.2",
+    "react-redux": "^4.4.5",
+    "redux": "^3.6.0",
     "vinyl-source-stream": "*",
     "watchify": "^3.7.0",
     "yargs": "*"
