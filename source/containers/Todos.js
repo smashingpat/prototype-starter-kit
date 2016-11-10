@@ -40,10 +40,10 @@ class Todos extends React.Component {
             <div className="panel panel-default">
                 <div className="panel-heading">Todo</div>
                 <div className="panel-body">
-                    <ul>
+                    <ul className='list-group'>
                     {this.state.todos.map(todo => {
                         return (
-                            <li key={todo.id}>
+                            <li key={todo.id} className={`list-group-item ${todo.done ? 'list-group-item-success' : ''}`}>
                                 <input
                                     type='checkbox'
                                     checked={todo.done}

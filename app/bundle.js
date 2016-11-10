@@ -21039,11 +21039,11 @@ var Todos = function (_React$Component) {
                     { className: 'panel-body' },
                     _react2.default.createElement(
                         'ul',
-                        null,
+                        { className: 'list-group' },
                         this.state.todos.map(function (todo) {
                             return _react2.default.createElement(
                                 'li',
-                                { key: todo.id },
+                                { key: todo.id, className: 'list-group-item ' + (todo.done ? 'list-group-item-success' : '') },
                                 _react2.default.createElement('input', {
                                     type: 'checkbox',
                                     checked: todo.done,
