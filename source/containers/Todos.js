@@ -24,6 +24,18 @@ class Todos extends React.Component {
         }
     }
 
+    addTodo(event) {
+        event.preventDefault()
+
+        this.setState({
+            todos: this.state.todos.concat({
+                id: Math.random(),
+                text: this.refs.textInput.value,
+                done: false
+            })
+        })
+    }
+
     changeDone(todoId) {
         this.setState({
             todos: this.state.todos.map(todo => {
@@ -40,6 +52,13 @@ class Todos extends React.Component {
             <div className="panel panel-default">
                 <div className="panel-heading">Todo</div>
                 <div className="panel-body">
+                    <form onSubmit={this.addTodo.bind(this)}>
+                        <div className='form-group'>
+                            <input className="form-control" ref='textInput'/>
+                        </div>
+                        <button type='submit' className="btn btn-default">Add todo</button>
+                    </form>
+                    <hr/>
                     <ul className='list-group'>
                     {this.state.todos.map(todo => {
                         return (

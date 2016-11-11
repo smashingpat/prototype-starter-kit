@@ -21010,6 +21010,19 @@ var Todos = function (_React$Component) {
     }
 
     _createClass(Todos, [{
+        key: 'addTodo',
+        value: function addTodo(event) {
+            event.preventDefault();
+
+            this.setState({
+                todos: this.state.todos.concat({
+                    id: Math.random(),
+                    text: this.refs.textInput.value,
+                    done: false
+                })
+            });
+        }
+    }, {
         key: 'changeDone',
         value: function changeDone(todoId) {
             this.setState({
@@ -21037,6 +21050,21 @@ var Todos = function (_React$Component) {
                 _react2.default.createElement(
                     'div',
                     { className: 'panel-body' },
+                    _react2.default.createElement(
+                        'form',
+                        { onSubmit: this.addTodo.bind(this) },
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'form-group' },
+                            _react2.default.createElement('input', { className: 'form-control', ref: 'textInput' })
+                        ),
+                        _react2.default.createElement(
+                            'button',
+                            { type: 'submit', className: 'btn btn-default' },
+                            'Add todo'
+                        )
+                    ),
+                    _react2.default.createElement('hr', null),
                     _react2.default.createElement(
                         'ul',
                         { className: 'list-group' },
