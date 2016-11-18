@@ -113,7 +113,7 @@ const tasks = {
         }, callback)
 
     },
-    watch: function watchFiels(callback) {
+    watch: function watchFiles(callback) {
         watch(['app/**/*.{html,json}'], browserSync.reload)
         watch(['source/**/*.{scss,sass}'], tasks.sass)
         tasks.script({watch:true}, callback)
