@@ -25,6 +25,7 @@
     "browser-sync": "^2.17.5",
     "browserify": "^13.0.1",
     "cssnano": "^3.8.0",
+    "envify": "^3.4.1",
     "event-stream": "^3.3.4",
     "gulp": "*",
     "gulp-if": "*",

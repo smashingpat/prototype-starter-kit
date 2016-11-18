@@ -20,6 +20,7 @@ const source = require('vinyl-source-stream')
 const browserify = require('browserify')
 const watchify = require('watchify')
 const babelify  = require('babelify')
+const envify = require('envify/custom')
 
 const browserSync = require('browser-sync')
 
@@ -68,9 +69,11 @@ const tasks = {
             const streams = files.map(entry => {
                 const filename = path.relative('./source/', entry);
 
-                let b = browserify(entry, {
-                    transform: babelify,
-                })
+                let b = browserify(entry)
+                    .transform(babelify)
+                    .transform(envify({
+                        NODE_ENV: argv.production ? 'production' : 'development'
+                    }))
 
                 b = settings.watch ? watchify(b) : b
 
