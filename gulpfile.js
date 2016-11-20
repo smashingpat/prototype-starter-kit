@@ -11,7 +11,8 @@ const sourcemaps = require('gulp-sourcemaps')
 const watch = require('gulp-watch')
 const sass = require('gulp-sass')
 const postcss = require('gulp-postcss')
-const argv = require('yargs').argv;
+const argv = require('yargs').argv
+const stripAnsi = require('strip-ansi')
 
 const uglify = require('gulp-uglify')
 const rename = require('gulp-rename')
@@ -28,10 +29,22 @@ const entry = './source/index.js'
 const outfile = 'bundle.js'
 
 const tasks = {
-    sass: function sassTask() {
+    errorHandler: function(err) {
+        const style = 'padding:1em;margin:-1em;background-color:#F44336;'
+
+        browserSync.notify(
+            `<pre style='${style}'><code>${stripAnsi(err.message)}</code></pre>`,
+            3000
+        );
+        gutil.log(`${gutil.colors.red('error')}: ${err.message}`)
+        this.emit('end')
+    },
+    sass: function() {
 
         return gulp.src('./source/global.scss')
-            .pipe(plumber())
+            .pipe(plumber({
+                errorHandler: tasks.errorHandler
+            }))
             .pipe(gulpif(!argv.production, sourcemaps.init()))
                 .pipe(sass({
                     outputStyle: 'expanded'
@@ -56,7 +69,7 @@ const tasks = {
             .pipe(browserSync.stream())
 
     },
-    script: function scriptTask(userSettings, callback) {
+    script: function(userSettings, callback) {
 
         const defaultSettings = {
             watch: false,
@@ -80,11 +93,7 @@ const tasks = {
 
                 const bundle = () => {
                     return b.bundle()
-                        .on('error', function(err) {
-                            browserSync.notify(`[<span style="color:red">Browserify</span>] ERROR`);
-                            gutil.log(`[${gutil.colors.cyan('browserify')}] ${gutil.colors.red('Error:')}\n ${err} \n\n${err.codeFrame}`);
-                            this.emit('end');
-                        })
+                        .on('error', tasks.errorHandler)
                         .pipe(source(filename))
                         .pipe(gulpif(argv.production, stream(uglify({
                             output: {
@@ -105,7 +114,7 @@ const tasks = {
         });
 
     },
-    server: function createServer(callback) {
+    server: function(callback) {
 
         // dev server
         let server = browserSync({
@@ -114,10 +123,25 @@ const tasks = {
             },
             open: argv.open,
             port: argv.port ? argv.port : 3000,
+            notify: {
+                styles: {
+                    'background-color': '#212121',
+                    'border-radius': '0px',
+                    'color': 'white',
+                    'padding': '1em',
+                    'position': 'fixed',
+                    'top': 'auto',
+                    'right': 'auto',
+                    'bottom': '0px',
+                    'left': '0px',
+                    'text-align': 'left',
+                    'text-shadow': '0 1px 2px rgba(0,0,0,.4)'
+                }
+            }
         }, callback)
 
     },
-    watch: function watchFiles(callback) {
+    watch: function(callback) {
         watch(['app/**/*.{html,json}'], browserSync.reload)
         watch(['source/**/*.{scss,sass}'], tasks.sass)
         tasks.script({watch:true}, callback)
