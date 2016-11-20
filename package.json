@@ -39,6 +39,7 @@
     "gulp-util": "^3.0.7",
     "gulp-watch": "*",
     "postcss-assets": "*",
+    "postcss-import": "^8.2.0",
     "vinyl-source-stream": "*",
     "watchify": "^3.7.0",
     "yargs": "*"

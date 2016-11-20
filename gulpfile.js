@@ -43,6 +43,7 @@ const tasks = {
                         cachebuster: true
                     }),
                     require('autoprefixer')({ browsers: ['last 1 version'] }),
+                    require('postcss-import')(),
                     require('cssnano')({
                         core: argv.production ? true : false,
                         discardComments: {
