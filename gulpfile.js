@@ -134,6 +134,7 @@ const tasks = {
                     'right': 'auto',
                     'bottom': '0px',
                     'left': '0px',
+                    'font-size': '11px',
                     'text-align': 'left',
                     'text-shadow': '0 1px 2px rgba(0,0,0,.4)'
                 }
