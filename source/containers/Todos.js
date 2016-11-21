@@ -1,39 +1,13 @@
 import React from 'react'
+import { connect } from 'react-redux'
+import { addTodo } from '../actions'
 
 class Todos extends React.Component {
-    constructor() {
-        super()
-        this.state = {
-            todos: [
-                {
-                    id: 1,
-                    text: 'Do groceries',
-                    done: false
-                },
-                {
-                    id: 2,
-                    text: 'Wrestle a bear',
-                    done: false
-                },
-                {
-                    id: 3,
-                    text: 'Make pancakes',
-                    done: false
-                }
-            ]
-        }
-    }
 
     addTodo(event) {
         event.preventDefault()
 
-        this.setState({
-            todos: this.state.todos.concat({
-                id: Math.random(),
-                text: this.refs.textInput.value,
-                done: false
-            })
-        })
+        this.props.dispatch(addTodo(this.refs.textInput.value))
     }
 
     changeDone(todoId) {
@@ -60,7 +34,7 @@ class Todos extends React.Component {
                     </form>
                     <hr/>
                     <ul className='list-group'>
-                    {this.state.todos.map(todo => {
+                    {this.props.todos.map(todo => {
                         return (
                             <li key={todo.id} className={`list-group-item ${todo.done ? 'list-group-item-success' : ''}`}>
                                 <input
@@ -79,4 +53,8 @@ class Todos extends React.Component {
     }
 }
 
-export default Todos
+export default connect(state => {
+    return {
+        todos: state.todos
+    }
+})(Todos)
