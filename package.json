@@ -26,6 +26,7 @@
     "browserify": "^13.0.1",
     "classnames": "^2.2.5",
     "cssnano": "^3.8.0",
+    "envify": "^3.4.1",
     "event-stream": "^3.3.4",
     "gulp": "*",
     "gulp-if": "*",
@@ -45,6 +46,8 @@
     "redux": "^3.6.0",
     "redux-logger": "^2.7.4",
     "redux-thunk": "^2.1.0",
+    "postcss-import": "^8.2.0",
+    "strip-ansi": "^3.0.1",
     "vinyl-source-stream": "*",
     "watchify": "^3.7.0",
     "yargs": "*"
