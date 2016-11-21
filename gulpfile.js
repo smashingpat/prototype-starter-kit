@@ -29,21 +29,33 @@ const entry = './source/index.js'
 const outfile = 'bundle.js'
 
 const tasks = {
-    errorHandler: function(err) {
-        const style = 'padding:1em;margin:-1em;background-color:#F44336;'
+    errorHandler: function(errorObject) {
+        const style = {
+            pre: 'padding:1em;margin:-1em;background-color:#F44336;color:#FFF;',
+            code: 'color:#FFF;word-wrap:break-word;'
+        }
+        let message = ''
+
+        for (var index in errorObject) {
+            if (errorObject.hasOwnProperty(index)) {
+                message += index + ':\n' + errorObject[index] + '\n';
+            }
+        }
 
         browserSync.notify(
-            `<pre style='${style}'><code>${stripAnsi(err.message)}</code></pre>`,
+            `<pre style='${style.pre}'><code style='${style.code}'>${stripAnsi(message)}</code></pre>`,
             3000
         );
-        gutil.log(`${gutil.colors.red('error')}: ${err.message}`)
-        this.emit('end')
+        gutil.log(`${gutil.colors.red('error')}: ${message}`)
+        // this.emit('end')
     },
     sass: function() {
 
         return gulp.src('./source/global.scss')
             .pipe(plumber({
-                errorHandler: tasks.errorHandler
+                errorHandler: (err) => tasks.errorHandler({
+                    message: err.messageFormatted
+                })
             }))
             .pipe(gulpif(!argv.production, sourcemaps.init()))
                 .pipe(sass({
@@ -93,7 +105,10 @@ const tasks = {
 
                 const bundle = () => {
                     return b.bundle()
-                        .on('error', tasks.errorHandler)
+                        .on('error', (err) => tasks.errorHandler({
+                            file: err.filename,
+                            code: err.codeFrame
+                        }))
                         .pipe(source(filename))
                         .pipe(gulpif(argv.production, stream(uglify({
                             output: {
@@ -127,7 +142,7 @@ const tasks = {
                 styles: {
                     'background-color': '#212121',
                     'border-radius': '0px',
-                    'color': 'white',
+                    'color': '#FFF',
                     'padding': '1em',
                     'position': 'fixed',
                     'top': 'auto',
