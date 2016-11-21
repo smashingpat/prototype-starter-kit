@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { addTodo, toggleTodo } from '../actions'
+import { addTodo, removeTodo, toggleTodo } from '../actions'
 
 class Todos extends React.Component {
 
@@ -8,6 +8,10 @@ class Todos extends React.Component {
         event.preventDefault()
 
         this.props.dispatch(addTodo(this.refs.textInput.value))
+    }
+
+    removeTodo(todoId) {
+        this.props.dispatch(removeTodo(todoId))
     }
 
     changeDone(todoId) {
@@ -35,7 +39,8 @@ class Todos extends React.Component {
                                     checked={todo.done}
                                     onChange={() => this.changeDone(todo.id)}
                                 />
-                                {todo.text}
+                                {` ${todo.text} `}
+                                <span className='glyphicon glyphicon-remove' onClick={() => this.removeTodo(todo.id)}/>
                             </li>
                         )
                     })}

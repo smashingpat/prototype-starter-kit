@@ -22919,20 +22919,25 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 exports.addTodo = addTodo;
+exports.removeTodo = removeTodo;
 exports.toggleTodo = toggleTodo;
-exports.addTodoWithCount = addTodoWithCount;
 exports.incrementCount = incrementCount;
 exports.decrementCount = decrementCount;
 function addTodo(text) {
-    return function (dispatch) {
-        dispatch({
-            type: "ADD_TODO",
-            payload: {
-                id: Math.random(),
-                text: text,
-                done: false
-            }
-        });
+    return {
+        type: "ADD_TODO",
+        payload: {
+            id: Math.random(),
+            text: text,
+            done: false
+        }
+    };
+}
+
+function removeTodo(id) {
+    return {
+        type: 'REMOVE_TODO',
+        payload: id
     };
 }
 
@@ -22940,13 +22945,6 @@ function toggleTodo(id) {
     return {
         type: "TOGGLE_TODO",
         payload: id
-    };
-}
-
-function addTodoWithCount(text) {
-    return function (dispatch) {
-        dispatch(addTodo(text));
-        dispatch(incrementCount());
     };
 }
 
@@ -23241,6 +23239,11 @@ var Todos = function (_React$Component) {
             this.props.dispatch((0, _actions.addTodo)(this.refs.textInput.value));
         }
     }, {
+        key: 'removeTodo',
+        value: function removeTodo(todoId) {
+            this.props.dispatch((0, _actions.removeTodo)(todoId));
+        }
+    }, {
         key: 'changeDone',
         value: function changeDone(todoId) {
             this.props.dispatch((0, _actions.toggleTodo)(todoId));
@@ -23290,7 +23293,10 @@ var Todos = function (_React$Component) {
                                         return _this2.changeDone(todo.id);
                                     }
                                 }),
-                                todo.text
+                                ' ' + todo.text + ' ',
+                                _react2.default.createElement('span', { className: 'glyphicon glyphicon-remove', onClick: function onClick() {
+                                        return _this2.removeTodo(todo.id);
+                                    } })
                             );
                         })
                     )
@@ -23383,6 +23389,12 @@ var todos = function todos() {
         case 'ADD_TODO':
             {
                 return state.concat(action.payload);
+            }
+        case 'REMOVE_TODO':
+            {
+                return state.filter(function (todo) {
+                    return todo.id !== action.payload;
+                });
             }
         case 'TOGGLE_TODO':
             {

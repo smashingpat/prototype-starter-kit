@@ -21,6 +21,9 @@ const todos = ( state = initialState, action) => {
         case 'ADD_TODO': {
             return state.concat(action.payload)
         }
+        case 'REMOVE_TODO': {
+            return state.filter(todo => todo.id !== action.payload)
+        }
         case 'TOGGLE_TODO': {
             return state.map(todo => {
                 if (action.payload === todo.id) {
