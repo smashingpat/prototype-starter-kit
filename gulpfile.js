@@ -29,7 +29,7 @@ const entry = './source/index.js'
 const outfile = 'bundle.js'
 
 const tasks = {
-    errorHandler: function(errorObject) {
+    errorHandler: function(errorObject, taskName) {
         const style = {
             pre: 'padding:1em;margin:-1em;background-color:#F44336;color:#FFF;',
             code: 'color:#FFF;word-wrap:break-word;'
@@ -38,7 +38,9 @@ const tasks = {
 
         for (var index in errorObject) {
             if (errorObject.hasOwnProperty(index)) {
-                message += index + ':\n' + errorObject[index] + '\n';
+                if (errorObject[index]) {
+                    message += index + ':\n' + errorObject[index] + '\n';
+                }
             }
         }
 
@@ -46,7 +48,7 @@ const tasks = {
             `<pre style='${style.pre}'><code style='${style.code}'>${stripAnsi(message)}</code></pre>`,
             3000
         );
-        gutil.log(`${gutil.colors.red('error')}: ${message}`)
+        gutil.log(`${gutil.colors.white.bgRed.bold(`error ${taskName}`)}:\n${message}`)
         // this.emit('end')
     },
     sass: function() {
@@ -55,7 +57,7 @@ const tasks = {
             .pipe(plumber({
                 errorHandler: (err) => tasks.errorHandler({
                     message: err.messageFormatted
-                })
+                }, 'sass')
             }))
             .pipe(gulpif(!argv.production, sourcemaps.init()))
                 .pipe(sass({
@@ -107,8 +109,9 @@ const tasks = {
                     return b.bundle()
                         .on('error', (err) => tasks.errorHandler({
                             file: err.filename,
+                            message: err.message,
                             code: err.codeFrame
-                        }))
+                        }, 'browserify'))
                         .pipe(source(filename))
                         .pipe(gulpif(argv.production, stream(uglify({
                             output: {

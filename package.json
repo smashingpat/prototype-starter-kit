@@ -38,6 +38,7 @@
     "gulp-uglify": "*",
     "gulp-util": "^3.0.7",
     "gulp-watch": "*",
+    "marked": "^0.3.6",
     "postcss-assets": "*",
     "postcss-import": "^8.2.0",
     "strip-ansi": "^3.0.1",
