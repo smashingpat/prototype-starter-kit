@@ -11,6 +11,13 @@ export function addTodo(text) {
     }
 }
 
+export function toggleTodo(id) {
+    return {
+        type: "TOGGLE_TODO",
+        payload: id
+    }
+}
+
 export function addTodoWithCount(text) {
     return dispatch => {
         dispatch(addTodo(text))

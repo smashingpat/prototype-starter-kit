@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { addTodo } from '../actions'
+import { addTodo, toggleTodo } from '../actions'
 
 class Todos extends React.Component {
 
@@ -11,14 +11,7 @@ class Todos extends React.Component {
     }
 
     changeDone(todoId) {
-        this.setState({
-            todos: this.state.todos.map(todo => {
-                if (todoId === todo.id) {
-                    todo.done = !todo.done
-                }
-                return todo
-            })
-        })
+        this.props.dispatch(toggleTodo(todoId))
     }
 
     render() {

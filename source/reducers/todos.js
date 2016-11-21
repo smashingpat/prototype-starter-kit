@@ -21,6 +21,14 @@ const todos = ( state = initialState, action) => {
         case 'ADD_TODO': {
             return state.concat(action.payload)
         }
+        case 'TOGGLE_TODO': {
+            return state.map(todo => {
+                if (action.payload === todo.id) {
+                    todo.done = !todo.done
+                }
+                return todo
+            })
+        }
     }
     return state
 }

@@ -22913,12 +22913,13 @@ function symbolObservablePonyfill(root) {
 	return result;
 };
 },{}],215:[function(require,module,exports){
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
 exports.addTodo = addTodo;
+exports.toggleTodo = toggleTodo;
 exports.addTodoWithCount = addTodoWithCount;
 exports.incrementCount = incrementCount;
 exports.decrementCount = decrementCount;
@@ -22932,6 +22933,13 @@ function addTodo(text) {
                 done: false
             }
         });
+    };
+}
+
+function toggleTodo(id) {
+    return {
+        type: "TOGGLE_TODO",
+        payload: id
     };
 }
 
@@ -23235,14 +23243,7 @@ var Todos = function (_React$Component) {
     }, {
         key: 'changeDone',
         value: function changeDone(todoId) {
-            this.setState({
-                todos: this.state.todos.map(function (todo) {
-                    if (todoId === todo.id) {
-                        todo.done = !todo.done;
-                    }
-                    return todo;
-                })
-            });
+            this.props.dispatch((0, _actions.toggleTodo)(todoId));
         }
     }, {
         key: 'render',
@@ -23382,6 +23383,15 @@ var todos = function todos() {
         case 'ADD_TODO':
             {
                 return state.concat(action.payload);
+            }
+        case 'TOGGLE_TODO':
+            {
+                return state.map(function (todo) {
+                    if (action.payload === todo.id) {
+                        todo.done = !todo.done;
+                    }
+                    return todo;
+                });
             }
     }
     return state;
