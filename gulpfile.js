@@ -32,23 +32,25 @@ const tasks = {
     errorHandler: function(errorObject, taskName) {
         const style = {
             pre: 'padding:1em;margin:-1em;background-color:#F44336;color:#FFF;',
-            code: 'color:#FFF;word-wrap:break-word;'
+            code: 'color:#FFF;word-wrap:break-word;font-family:monospace;'
         }
-        let message = ''
+        let bsMessage = ''
+        let logMessage = ''
 
         for (var index in errorObject) {
             if (errorObject.hasOwnProperty(index)) {
                 if (errorObject[index]) {
-                    message += index + ':\n' + errorObject[index] + '\n';
+                    bsMessage += `<u>${index}</u>` + ':\n' + errorObject[index] + '\n';
+                    logMessage += index + ':\n' + errorObject[index] + '\n';
                 }
             }
         }
 
         browserSync.notify(
-            `<pre style='${style.pre}'><code style='${style.code}'>${stripAnsi(message)}</code></pre>`,
-            3000
+            `<pre style='${style.pre}'><code style='${style.code}'>${stripAnsi(bsMessage)}</code></pre>`,
+            300000
         );
-        gutil.log(`${gutil.colors.white.bgRed.bold(`error ${taskName}`)}:\n${message}`)
+        gutil.log(`${gutil.colors.red.bold(`error ${taskName}`)}:\n${logMessage}`)
         // this.emit('end')
     },
     sass: function() {
