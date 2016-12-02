@@ -1,29 +1,29 @@
 /*
-  clearfix
-  --------
+    clearfix
+    --------
 
-  Adds clearfix to the element
+    Adds clearfix to the element
 ============================================================================= */
 
 @mixin clearfix() {
-  &:after {
-    content: "";
-    display: table;
-    clear: both;
-  }
+    &:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
 }
 
 @mixin cf() {
-  @include clearfix();
+    @include clearfix();
 }
 
 
 
 /*
-  Media Query
-  -----------
+    Media Query
+    -----------
 
-  Add easy Media queries
+    Add easy Media queries
 ============================================================================= */
 
 $media-desktop: 992px;
@@ -31,115 +31,116 @@ $media-tablet:  767px;
 $media-mobile:  480px;
 
 @function translate-media-conditions($c) {
-  $conditionsMap: (
-    "screen": "only screen",
-    "print": "only print",
-    "retina": "(-webkit-min-device-pixel-ratio: 1.5), (min--moz-device-pixel-ratio: 1.5), (-o-min-device-pixel-ratio: 3/2), (min-device-pixel-ratio: 1.5), (min-resolution: 120dpi)",
+    $conditionsMap: (
+        "screen": "only screen",
+        "print": "only print",
+        "retina": "(-webkit-min-device-pixel-ratio: 1.5), (min--moz-device-pixel-ratio: 1.5), (-o-min-device-pixel-ratio: 3/2), (min-device-pixel-ratio: 1.5), (min-resolution: 120dpi)",
 
-    ">desktop": "(min-width: #{$media-desktop + 1})",
-    "<desktop": "(max-width: #{$media-desktop})",
-    ">tablet":  "(min-width: #{$media-tablet + 1})",
-    "<tablet":  "(max-width: #{$media-tablet})",
-    ">mobile":  "(min-width: #{$media-mobile + 1})",
-    "<mobile":  "(max-width: #{$media-mobile})"
-  );
-  @return map-get( $conditionsMap, $c );
+        ">desktop": "(min-width: #{$media-desktop + 1})",
+        "<desktop": "(max-width: #{$media-desktop})",
+        ">tablet":  "(min-width: #{$media-tablet + 1})",
+        "<tablet":  "(max-width: #{$media-tablet})",
+        ">mobile":  "(min-width: #{$media-mobile + 1})",
+        "<mobile":  "(max-width: #{$media-mobile})"
+    );
+    @return map-get( $conditionsMap, $c );
 }
 
 // The media mixin
 @mixin media($args...) {
-  $query: "";
+    $query: "";
 
-  // Loops through all $arguments passed,
-  // and if more then one is found add " and " between them
-  @each $arg in $args {
+    // Loops through all $arguments passed,
+    // and if more then one is found add " and " between them
+    @each $arg in $args {
     $op: "";
     @if ( $query != "" ) {
-      $op: " and ";
+        $op: " and ";
     }
     $query: $query + $op + translate-media-conditions($arg);
-  }
-  @media #{$query} { @content; }
+    }
+    @media #{$query} { @content; }
 }
 
 
 
 /*
-  selection
-  ----------
+    selection
+    ----------
 
-  Add styling to the selection
+    Add styling to the selection
 ============================================================================= */
 
 @mixin selection() {
-  &::selection {
-    @content;
-  }
-  &::-moz-selection {
-    @content;
-  }
+    &::selection {
+        @content;
+    }
+    &::-moz-selection {
+        @content;
+    }
 }
 
 
 
 /*
-  placeholder
-  ----------
+    placeholder
+    ----------
 
-  Add styling to the placeholder of inputs
+    Add styling to the placeholder of inputs
 ============================================================================= */
 
 @mixin placeholder() {
-  &::-webkit-input-placeholder {
-    @content;
-  }
+    &::-webkit-input-placeholder {
+        @content;
+    }
 
-  &:-moz-placeholder {
-    @content;
-  }
+    &:-moz-placeholder {
+        @content;
+    }
 
-  &::-moz-placeholder {
-    @content;
-  }
+    &::-moz-placeholder {
+        @content;
+    }
 
-  &:-ms-input-placeholder {
-    @content;
-  }
+    &:-ms-input-placeholder {
+        @content;
+    }
 }
 
 
 
 /*
-  font-scale
-  ----------
+    font-scale
+    ----------
 
-  Font scaling responsive according to min and max breakpoint
+    Font scaling responsive according to min and max breakpoint
 ============================================================================= */
 
 @mixin font-scale(
-  $responsive,         // responsive size (using vw or vh);
-  $min: false,         // minimal pixel-size
-  $max: false          // maximum pixel-size
+    $responsive,    // responsive size (using vw or vh);
+    $min: false,    // minimal pixel-size
+    $max: false     // maximum pixel-size
 ) {
-  // strip unit from $responsive
-  $responsive-unitless: $responsive / ($responsive - $responsive + 1);
-  $dimension: if(unit($responsive) == 'vh', 'height', 'width');
-  $min-breakpoint: false;
-  @if $min {
-    $min-breakpoint: $min / $responsive-unitless * 100;
+    // strip unit from $responsive
+    $responsive-unitless: $responsive / ($responsive - $responsive + 1);
+    $dimension: if(unit($responsive) == 'vh', 'height', 'width');
+    $min-breakpoint: false;
 
-    @media (max-#{$dimension}: #{$min-breakpoint}) {
-      font-size: $min;
+    @if $min {
+        $min-breakpoint: $min / $responsive-unitless * 100;
+
+        @media (max-#{$dimension}: #{$min-breakpoint}) {
+            font-size: $min;
+        }
     }
-  }
 
-  @if $max {
-    $max-breakpoint: $max / $responsive-unitless * 100;
+    @if $max {
+        $max-breakpoint: $max / $responsive-unitless * 100;
 
-    @media (min-#{$dimension}: #{$max-breakpoint}) {
-      font-size: $max;
+        @media (min-#{$dimension}: #{$max-breakpoint}) {
+            font-size: $max;
+        }
     }
-  }
 
-  font-size: $responsive;
+    font-size: $responsive;
 }

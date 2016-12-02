@@ -1,6 +1,6 @@
 /*
-  Base styling
-  ------------
+    Base styling
+    ------------
 
 
 ============================================================================= */
@@ -10,24 +10,24 @@
 }
 
 html {
-  font-size: $font-size;
-  height: 100%;
+    font-size: $font-size;
+    height: 100%;
 
-  @include media('screen', '<tablet') {
-    font-size: #{$font-size * 1.1};
-  }
+    @include media('screen', '<tablet') {
+        font-size: #{$font-size * 1.1};
+    }
 }
 
 body {
-  color: $c-text;
-  background-color: $c-background;
-  font-family: $font-family;
-  line-height: $line-height;
-  min-height: 100%;
-  position: relative;
+    color: $c-text;
+    background-color: $c-background;
+    font-family: $font-family;
+    line-height: $line-height;
+    min-height: 100%;
+    position: relative;
 }
 
 @include selection {
-  background: $c-accent;
-  color: $white;
+    background: $c-accent;
+    color: $white;
 }

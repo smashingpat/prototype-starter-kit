@@ -1,34 +1,33 @@
 /*
-  grid
-  ----
-
-
+    grid
+    ----
 ============================================================================= */
 
 .Grid {
-  @include media('>tablet') {
-    display: flex;
-  }
-
-  > * {
-    padding-left: $gutter;
-    padding-right: $gutter;
-
     @include media('>tablet') {
-      flex: 1;
-      flex-grow: 4;
-      &:first-child { margin-left: -#{$gutter}; }
-      &:last-child { margin-right: -#{$gutter}; }
+        display: flex;
     }
-  }
 
-  &-column--small { flex-grow: 2; }
-  &-column--large { flex-grow: 8; }
+    > * {
+        padding-left: $gutter;
+        padding-right: $gutter;
+
+        @include media('>tablet') {
+            flex: 1;
+            flex-grow: 4;
+            &:first-child { margin-left: -#{$gutter}; }
+            &:last-child { margin-right: -#{$gutter}; }
+        }
+    }
+
+    &-column--small { flex-grow: 2; }
+    &-column--large { flex-grow: 8; }
 }
 
+
 /*
-  wrapper
-  -------
+    wrapper
+    -------
 ============================================================================= */
 
 .Wrapper {
@@ -44,6 +43,7 @@
   &--full   { max-width: none; }
 }
 
+
 /*
   full width
   ----------
@@ -55,12 +55,12 @@
 ============================================================================= */
 
 .FullWidth {
-  width: 100vw;
-  position: relative;
-  left: 50%;
-  right: 50%;
-  margin-left: -50vw;
-  margin-right: -50vw;
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
 }
 
 
@@ -70,12 +70,13 @@
 
   Center content using Flexbox
 ============================================================================= */
-.CenterContent {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
 
-  &-wrapper {}
+.CenterContent {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+
+    &-wrapper {}
 }
