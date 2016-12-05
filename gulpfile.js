@@ -99,6 +99,8 @@ const tasks = {
             const streams = files.map(entry => {
                 const filename = path.relative('./source/', entry);
 
+                let lastBytes = 0;
+
                 let b = browserify(entry)
                     .transform(babelify)
                     .transform(envify({
@@ -125,7 +127,21 @@ const tasks = {
                 }
 
                 b.on('update', bundle)
-                b.on('log', gutil.log)
+                b.on('bytes', bytes => {
+                    const difference = () => {
+                        const calc = `${bytes - lastBytes}`
+
+                        if (calc > 0) {
+                            return gutil.colors.bold.green('+' + calc)
+                        } else if (calc < 0) {
+                            return gutil.colors.bold.yellow(calc)
+                        } else {
+                            return gutil.colors.bold.white(calc)
+                        }
+                    }
+                    gutil.log(`[${gutil.colors.bold.blue(`browserify`)}] compiled ${gutil.colors.bold(filename)} -> ${difference()} bytes`)
+                    lastBytes = bytes
+                })
 
                 return bundle()
             })

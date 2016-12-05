@@ -19,6 +19,7 @@
   "license": "MIT",
   "dependencies": {
     "autoprefixer": "*",
+    "babel-polyfill": "^6.16.0",
     "babel-preset-es2015": "*",
     "babel-preset-react": "*",
     "babelify": "*",
