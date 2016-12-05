@@ -128,6 +128,7 @@ const tasks = {
 
                 b.on('update', bundle)
                 b.on('bytes', bytes => {
+                    const kiloBytes = (bytes / 1000);
                     const difference = () => {
                         const calc = `${bytes - lastBytes}`
 
@@ -139,7 +140,7 @@ const tasks = {
                             return gutil.colors.bold.white(calc)
                         }
                     }
-                    gutil.log(`[${gutil.colors.bold.blue(`browserify`)}] compiled ${gutil.colors.bold(filename)} -> ${difference()} bytes`)
+                    gutil.log(`[${gutil.colors.bold.blue(`browserify`)}] compiled ${gutil.colors.bold(filename)} (${kiloBytes}kb) -> ${difference()} bytes`)
                     lastBytes = bytes
                 })
 
