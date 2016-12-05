@@ -27,33 +27,33 @@ function selector(selectors, parent = document) {
     ------------------------------------ */
 
     function ifNode(node) {
-       return (
-         typeof HTMLElement === "object" ?
-          node instanceof HTMLElement : //DOM2
-          node && typeof node === "object" && node !== null && node.nodeType === 1 && typeof node.nodeName==="string"
-       )
+        return (
+            typeof HTMLElement === "object" ?
+            node instanceof HTMLElement : //DOM2
+            node && typeof node === "object" && node !== null && node.nodeType === 1 && typeof node.nodeName==="string"
+        )
     }
 
     function getNodes() {
-       if (ifNode(selectors)) {
-         singleNode = true
-         nodes = selectors
-       } else {
-         nodes = parent.querySelectorAll(selectors);
-       }
+        if (ifNode(selectors)) {
+            singleNode = true
+            nodes = selectors
+        } else {
+            nodes = parent.querySelectorAll(selectors);
+        }
     }
 
     function eachNode(callback) {
-       if (!singleNode) {
-         let i = 0;
-         for (let i = 0; i < nodes.length; i++) {
-          callback(nodes[i])
-         }
-       } else {
-         callback(nodes)
-       }
+        if (!singleNode) {
+            let i = 0;
+            for (let i = 0; i < nodes.length; i++) {
+                callback(nodes[i])
+            }
+        } else {
+            callback(nodes)
+        }
 
-       return this;
+        return this;
     }
 
     /*
@@ -61,13 +61,13 @@ function selector(selectors, parent = document) {
     ------------------------------------ */
 
     function changeNodeCss(css) {
-       for (const key of Object.keys(css)) {
-         eachNode(node => {
-          node.style[key] = css[key]; // eslint-disable-line
-         });
-       }
+        for (const key of Object.keys(css)) {
+            eachNode(node => {
+                node.style[key] = css[key]; // eslint-disable-line
+            });
+        }
 
-       return this;
+        return this;
     }
 
     /*
@@ -75,21 +75,21 @@ function selector(selectors, parent = document) {
     ------------------------------------ */
 
     function addClass(classes) {
-       eachNode(element => element.classList.add(classes));
+        eachNode(element => element.classList.add(classes));
 
-       return this;
+        return this;
     }
 
     function removeClass(classes) {
-       eachNode(element => element.classList.remove(classes));
+        eachNode(element => element.classList.remove(classes));
 
-       return this;
+        return this;
     }
 
     function toggleClass(classes) {
-       eachNode(element => element.classList.toggle(classes));
+        eachNode(element => element.classList.toggle(classes));
 
-       return this;
+        return this;
     }
 
 
@@ -98,27 +98,27 @@ function selector(selectors, parent = document) {
     ------------------------------------ */
 
     function addEvents(eventNames, callback) {
-       eachNode(element => {
-         eventNames.split(' ').map(eventName => {
-          if (eventName) {
-              return element.addEventListener(eventName, callback);
-          }
+        eachNode(element => {
+            eventNames.split(' ').map(eventName => {
+                if (eventName) {
+                    return element.addEventListener(eventName, callback);
+                }
 
-          return false
-         });
-       });
+                return false
+            });
+        });
 
-       return this;
+        return this;
     }
 
     function removeEvents(eventNames, callback) {
-       eachNode(element => {
-         eventNames.split(' ').map(eventName => {
-          element.removeEventListener(eventName, callback);
-         });
-       });
+        eachNode(element => {
+            eventNames.split(' ').map(eventName => {
+                element.removeEventListener(eventName, callback);
+            });
+        });
 
-       return this;
+        return this;
     }
 
 
@@ -127,20 +127,20 @@ function selector(selectors, parent = document) {
     ------------------------------------ */
 
     function init() {
-       getNodes();
+        getNodes();
     }
 
     init();
 
     return {
-       nodes,
-       addClass,
-       removeClass,
-       toggleClass,
-       on: addEvents,
-       off: removeEvents,
-       css: changeNodeCss,
-       each: eachNode,
+        nodes,
+        addClass,
+        removeClass,
+        toggleClass,
+        on: addEvents,
+        off: removeEvents,
+        css: changeNodeCss,
+        each: eachNode,
     };
 }
 
