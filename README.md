@@ -18,7 +18,7 @@ npm start
 npm run bundle
 ```
 
-This starts a watch server and open `localhost:3000` in your default browser. Changes made to `source/index.js` will bundle the files and refreshes the browser. Changes made to `source/sass/*.scss` will cause CSS injection without losing the current state.
+This starts a watch server and open `localhost:1337` in your default browser. Changes made to `source/index.js` will bundle the files and refreshes the browser. Changes made to `source/sass/*.scss` will cause CSS injection without losing the current state.
 
 ## Tasks
 ```sh

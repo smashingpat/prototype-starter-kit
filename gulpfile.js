@@ -142,7 +142,7 @@ const tasks = {
                 baseDir: "./app/"
             },
             open: argv.open,
-            port: argv.port ? argv.port : 3000,
+            port: argv.port ? argv.port : 1337,
             notify: {
                 styles: {
                     'background-color': '#212121',
