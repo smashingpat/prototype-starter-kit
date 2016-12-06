@@ -7,6 +7,8 @@ class App extends Component {
         super()
         this.state = {
             imageUrl: '/image.jpg',
+            horizontalSlices: 2,
+            verticalSlices: 2,
             width: 0,
             height: 0,
             dataurl: [],
@@ -24,7 +26,9 @@ class App extends Component {
 
         image.onload = () => {
             const data = imageSlicer(image, {
-                maxSize: this.state.maxSize
+                maxSize: this.state.maxSize,
+                horizontal: this.state.horizontalSlices,
+                vertical: this.state.verticalSlices,
             });
             const { dataurl } = data;
             const { height, width } = data.totalSize;
@@ -54,9 +58,14 @@ class App extends Component {
             showDifference: !this.state.showDifference
         })
     }
-    inputHandler(event) {
-        const imageUrl = URL.createObjectURL(event.target.files[0])
+    formHandler(event) {
+        event.preventDefault();
+        const imageUrl = URL.createObjectURL(this.refs.file.files[0])
+        const horizontalSlices = this.refs.horizontal.value
+        const verticalSlices = this.refs.vertical.value
         this.setState({
+            horizontalSlices,
+            verticalSlices,
             imageUrl
         })
 
@@ -65,8 +74,17 @@ class App extends Component {
     render() {
         return (
             <div className="Wrapper">
+                <form onSubmit={this.formHandler.bind(this)}>
+                    <div>
+                        <input type="file" onChange={this.formHandler.bind(this)} ref="file" defaultValue={this.state.imageUrl}/>
+                    </div>
+                    <div>
+                        <input ref="horizontal" defaultValue={this.state.horizontalSlices}/>
+                        <input ref="vertical" defaultValue={this.state.verticalSlices}/>
+                    </div>
+                    <button type="submit">submit</button>
+                </form>
                 <div>
-                    <input type="file" onChange={this.inputHandler.bind(this)} /> <br/>
                     <button onClick={this.toggleOutline.bind(this)}>toggle outline</button>
                     <button onClick={this.toggleOriginal.bind(this)}>toggle original</button>
                     <button onClick={this.toggleDifference.bind(this)}>toggle difference</button>

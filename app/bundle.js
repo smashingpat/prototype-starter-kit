@@ -20482,6 +20482,8 @@ var App = function (_Component) {
 
         _this.state = {
             imageUrl: '/image.jpg',
+            horizontalSlices: 2,
+            verticalSlices: 2,
             width: 0,
             height: 0,
             dataurl: [],
@@ -20507,7 +20509,9 @@ var App = function (_Component) {
 
             image.onload = function () {
                 var data = (0, _imageSlicer2.default)(image, {
-                    maxSize: _this2.state.maxSize
+                    maxSize: _this2.state.maxSize,
+                    horizontal: _this2.state.horizontalSlices,
+                    vertical: _this2.state.verticalSlices
                 });
                 var dataurl = data.dataurl;
                 var _data$totalSize = data.totalSize;
@@ -20547,10 +20551,15 @@ var App = function (_Component) {
             });
         }
     }, {
-        key: 'inputHandler',
-        value: function inputHandler(event) {
-            var imageUrl = URL.createObjectURL(event.target.files[0]);
+        key: 'formHandler',
+        value: function formHandler(event) {
+            event.preventDefault();
+            var imageUrl = URL.createObjectURL(this.refs.file.files[0]);
+            var horizontalSlices = this.refs.horizontal.value;
+            var verticalSlices = this.refs.vertical.value;
             this.setState({
+                horizontalSlices: horizontalSlices,
+                verticalSlices: verticalSlices,
                 imageUrl: imageUrl
             });
 
@@ -20565,11 +20574,28 @@ var App = function (_Component) {
                 'div',
                 { className: 'Wrapper' },
                 _react2.default.createElement(
+                    'form',
+                    { onSubmit: this.formHandler.bind(this) },
+                    _react2.default.createElement(
+                        'div',
+                        null,
+                        _react2.default.createElement('input', { type: 'file', onChange: this.formHandler.bind(this), ref: 'file', defaultValue: this.state.imageUrl })
+                    ),
+                    _react2.default.createElement(
+                        'div',
+                        null,
+                        _react2.default.createElement('input', { ref: 'horizontal', defaultValue: this.state.horizontalSlices }),
+                        _react2.default.createElement('input', { ref: 'vertical', defaultValue: this.state.verticalSlices })
+                    ),
+                    _react2.default.createElement(
+                        'button',
+                        { type: 'submit' },
+                        'submit'
+                    )
+                ),
+                _react2.default.createElement(
                     'div',
                     null,
-                    _react2.default.createElement('input', { type: 'file', onChange: this.inputHandler.bind(this) }),
-                    ' ',
-                    _react2.default.createElement('br', null),
                     _react2.default.createElement(
                         'button',
                         { onClick: this.toggleOutline.bind(this) },
