@@ -47,8 +47,7 @@ function getImageData(image, userSettings) {
         var x = 0;
         var y = 0;
 
-        (0, _times2.default)(slices)(function (i) {
-            var index = i + 1;
+        (0, _times2.default)(slices)(function (index) {
             var canvas = document.createElement('canvas');
             var context = canvas.getContext('2d');
             canvas.height = imageHeightSlice;

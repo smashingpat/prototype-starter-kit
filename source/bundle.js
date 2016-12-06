@@ -40,8 +40,7 @@ function getImageData(image, userSettings) {
         let x = 0
         let y = 0
 
-        times(slices)((i) => {
-            const index = (i + 1);
+        times(slices)((index) => {
             const canvas = document.createElement('canvas')
             const context = canvas.getContext('2d')
             canvas.height = imageHeightSlice
