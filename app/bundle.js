@@ -20530,7 +20530,8 @@ var App = function (_Component) {
         key: 'toggleOriginal',
         value: function toggleOriginal() {
             this.setState({
-                showOriginal: !this.state.showOriginal
+                showOriginal: !this.state.showOriginal,
+                showDifference: false
             });
         }
     }, {
@@ -20656,7 +20657,6 @@ function imageSlicer(image, userSettings) {
         maxSize: 1000
     };
     var settings = Object.assign({}, initialSettings, userSettings);
-    console.log(settings);
     var slices = settings.horizontal * settings.vertical;
     var sizes = calculateSizes();
     var imageHeight = sizes.height;

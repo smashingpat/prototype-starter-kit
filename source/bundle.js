@@ -42,7 +42,8 @@ class App extends Component {
     }
     toggleOriginal() {
         this.setState({
-            showOriginal: !this.state.showOriginal
+            showOriginal: !this.state.showOriginal,
+            showDifference: false
         })
     }
     toggleDifference() {

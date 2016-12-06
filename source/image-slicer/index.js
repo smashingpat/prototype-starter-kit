@@ -7,7 +7,6 @@ function imageSlicer(image, userSettings) {
         maxSize: 1000,
     }
     const settings = Object.assign({}, initialSettings, userSettings);
-    console.log(settings);
     const slices = (settings.horizontal * settings.vertical)
     const sizes = calculateSizes()
     const imageHeight = sizes.height
