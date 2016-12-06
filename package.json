@@ -44,6 +44,8 @@
     "normalize.css": "^5.0.0",
     "postcss-assets": "*",
     "postcss-import": "^8.2.0",
+    "react": "^15.4.1",
+    "react-dom": "^15.4.1",
     "strip-ansi": "^3.0.1",
     "vinyl-source-stream": "*",
     "watchify": "^3.7.0",
