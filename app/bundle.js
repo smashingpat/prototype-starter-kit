@@ -16,16 +16,25 @@ var image = new Image();
 image.onload = function () {
     var data = getImageData(this);
 
-    data.map(function (node) {
+    data.dataurl.map(function (node) {
         var image = new Image();
         image.src = node.imageData;
 
-        document.body.appendChild(image);
+        document.getElementById('imageContainer').appendChild(image);
     });
 };
 
 // load image
 image.src = imagePath;
+
+/*
+    Set input field that changes the above image
+------------------------------------ */
+var input = document.getElementById('upload');
+
+input.addEventListener('change', function (event) {
+    image.src = URL.createObjectURL(event.target.files[0]);
+});
 
 /*
     Create the canvas and split it
@@ -34,15 +43,13 @@ function getImageData(image, userSettings) {
     var initialSettings = {
         horizontal: 17,
         vertical: 12,
-        maxSize: 500
+        maxSize: 800
     };
     var settings = Object.assign({}, initialSettings, userSettings);
     var slices = settings.horizontal * settings.vertical;
     var sizes = calculateSizes();
     var imageHeight = sizes.height;
     var imageWidth = sizes.width;
-
-    console.log(sizes);
 
     var dataurl = void 0;
 
@@ -77,12 +84,14 @@ function getImageData(image, userSettings) {
         var imageHeightSlice = imageHeight / vertical;
 
         var data = [];
+
         var x = 0;
         var y = 0;
 
         (0, _times2.default)(slices)(function (index) {
             var canvas = document.createElement('canvas');
             var context = canvas.getContext('2d');
+
             canvas.height = imageHeightSlice;
             canvas.width = imageWidthSlice;
 
@@ -108,7 +117,13 @@ function getImageData(image, userSettings) {
 
     dataurl = splitImageData();
 
-    return dataurl;
+    return {
+        totalSize: {
+            height: imageHeight,
+            width: imageWidth
+        },
+        dataurl: dataurl
+    };
 }
 
 },{"./utils/times":2}],2:[function(require,module,exports){
