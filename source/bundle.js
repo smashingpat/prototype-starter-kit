@@ -10,10 +10,15 @@ const image = new Image()
 image.onload = function() {
     const data = getImageData(this);
 
-    console.log(data);
+    data.map(node => {
+        const image = new Image()
+        image.src = node.imageData
+
+        document.body.appendChild(image)
+    })
 }
 
-
+// load image
 image.src = imagePath
 
 /*
@@ -21,9 +26,9 @@ image.src = imagePath
 ------------------------------------ */
 function getImageData(image, userSettings) {
     const initialSettings = {
-        horizontal: 4,
-        vertical: 4,
-        maxSize: 800,
+        horizontal: 17,
+        vertical: 12,
+        maxSize: 500,
     }
     const settings = Object.assign({}, initialSettings, userSettings);
     const slices = (settings.horizontal * settings.vertical)
@@ -72,7 +77,7 @@ function getImageData(image, userSettings) {
             canvas.width = imageWidthSlice
 
             // Draw the image
-            context.drawImage(image, x, y)
+            context.drawImage(image, x, y, imageWidth, imageHeight)
 
             // Move the pointers
             if ((index + 1) % horizontal != 0) {
@@ -86,9 +91,6 @@ function getImageData(image, userSettings) {
                 index,
                 imageData: canvas.toDataURL()
             })
-
-            // temporarely render the canvas on the body
-            document.body.appendChild(canvas)
         })
 
         return data
