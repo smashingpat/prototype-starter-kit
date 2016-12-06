@@ -20490,13 +20490,17 @@ var App = function (_Component) {
             showDifference: false,
             maxSize: 500
         };
-        _this.renderSlicedImage();
         return _this;
     }
 
     _createClass(App, [{
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            this.renderSlicedImage(this.state.imageUrl);
+        }
+    }, {
         key: 'renderSlicedImage',
-        value: function renderSlicedImage() {
+        value: function renderSlicedImage(imageUrl) {
             var _this2 = this;
 
             var image = new Image();
@@ -20517,7 +20521,7 @@ var App = function (_Component) {
                 });
             };
 
-            image.src = this.state.imageUrl;
+            image.src = imageUrl;
         }
     }, {
         key: 'toggleOutline',
@@ -20543,6 +20547,16 @@ var App = function (_Component) {
             });
         }
     }, {
+        key: 'inputHandler',
+        value: function inputHandler(event) {
+            var imageUrl = URL.createObjectURL(event.target.files[0]);
+            this.setState({
+                imageUrl: imageUrl
+            });
+
+            this.renderSlicedImage(imageUrl);
+        }
+    }, {
         key: 'render',
         value: function render() {
             var _this3 = this;
@@ -20553,6 +20567,9 @@ var App = function (_Component) {
                 _react2.default.createElement(
                     'div',
                     null,
+                    _react2.default.createElement('input', { type: 'file', onChange: this.inputHandler.bind(this) }),
+                    ' ',
+                    _react2.default.createElement('br', null),
                     _react2.default.createElement(
                         'button',
                         { onClick: this.toggleOutline.bind(this) },
@@ -20579,7 +20596,8 @@ var App = function (_Component) {
                         { style: {
                                 display: 'inline-block',
                                 width: this.state.width,
-                                fontSize: 0
+                                fontSize: 0,
+                                outline: '1px solid red'
                             } },
                         this.state.dataurl.map(function (data) {
                             var styles = {
@@ -20593,9 +20611,9 @@ var App = function (_Component) {
                             position: 'absolute',
                             top: 0,
                             left: 0,
-                            filter: !this.state.showDifference && 'invert(100%) opacity(50%)',
+                            filter: this.state.showDifference && 'invert(100%) opacity(50%)',
                             display: !this.state.showOriginal && 'none',
-                            outline: '5px solid green'
+                            outline: '1px solid green'
                         } })
                 )
             );
@@ -20606,36 +20624,6 @@ var App = function (_Component) {
 }(_react.Component);
 
 (0, _reactDom.render)(_react2.default.createElement(App, null), document.getElementById('root'));
-
-/*
-//     Create the image and wait for it to be loaded
-// ------------------------------------ */
-// const imagePath = '/image.jpg'
-// const image = new Image()
-//
-// image.onload = function() {
-//     const data = imageSlicer(this);
-//
-//     data.dataurl.map(node => {
-//         const image = new Image()
-//         image.src = node.imageData
-//
-//         document.getElementById('imageContainer').appendChild(image)
-//     })
-// }
-//
-// // load image
-// image.src = imagePath
-//
-//
-// /*
-//     Set input field that changes the above image
-// ------------------------------------ */
-// const input = document.getElementById('upload');
-//
-// input.addEventListener('change', function(event) {
-//      image.src = URL.createObjectURL(event.target.files[0]);
-// })
 
 },{"./image-slicer":180,"react":178,"react-dom":25}],180:[function(require,module,exports){
 'use strict';

@@ -15,9 +15,11 @@ class App extends Component {
             showDifference: false,
             maxSize: 500
         }
-        this.renderSlicedImage()
     }
-    renderSlicedImage() {
+    componentDidMount() {
+        this.renderSlicedImage(this.state.imageUrl)
+    }
+    renderSlicedImage(imageUrl) {
         const image = new Image()
 
         image.onload = () => {
@@ -33,7 +35,7 @@ class App extends Component {
             })
         }
 
-        image.src = this.state.imageUrl
+        image.src = imageUrl
     }
     toggleOutline() {
         this.setState({
@@ -52,10 +54,19 @@ class App extends Component {
             showDifference: !this.state.showDifference
         })
     }
+    inputHandler(event) {
+        const imageUrl = URL.createObjectURL(event.target.files[0])
+        this.setState({
+            imageUrl
+        })
+
+        this.renderSlicedImage(imageUrl)
+    }
     render() {
         return (
             <div className="Wrapper">
                 <div>
+                    <input type="file" onChange={this.inputHandler.bind(this)} /> <br/>
                     <button onClick={this.toggleOutline.bind(this)}>toggle outline</button>
                     <button onClick={this.toggleOriginal.bind(this)}>toggle original</button>
                     <button onClick={this.toggleDifference.bind(this)}>toggle difference</button>
@@ -67,6 +78,7 @@ class App extends Component {
                         display: 'inline-block',
                         width: this.state.width,
                         fontSize: 0,
+                        outline: '1px solid red',
                     }}>
                         {this.state.dataurl.map(data => {
                             let styles = {
@@ -82,9 +94,9 @@ class App extends Component {
                         position: 'absolute',
                         top: 0,
                         left: 0,
-                        filter: !this.state.showDifference && 'invert(100%) opacity(50%)',
+                        filter: this.state.showDifference && 'invert(100%) opacity(50%)',
                         display: !this.state.showOriginal && 'none',
-                        outline: '5px solid green',
+                        outline: '1px solid green',
                     }}/>
                 </div>
             </div>
@@ -96,33 +108,3 @@ render(
     <App/>,
     document.getElementById('root')
 )
-
-/*
-//     Create the image and wait for it to be loaded
-// ------------------------------------ */
-// const imagePath = '/image.jpg'
-// const image = new Image()
-//
-// image.onload = function() {
-//     const data = imageSlicer(this);
-//
-//     data.dataurl.map(node => {
-//         const image = new Image()
-//         image.src = node.imageData
-//
-//         document.getElementById('imageContainer').appendChild(image)
-//     })
-// }
-//
-// // load image
-// image.src = imagePath
-//
-//
-// /*
-//     Set input field that changes the above image
-// ------------------------------------ */
-// const input = document.getElementById('upload');
-//
-// input.addEventListener('change', function(event) {
-//      image.src = URL.createObjectURL(event.target.files[0]);
-// })
