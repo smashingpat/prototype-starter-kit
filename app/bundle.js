@@ -25,16 +25,43 @@ image.src = imagePath;
     Create the canvas and split it
 ------------------------------------ */
 function getImageData(image, userSettings) {
-    var imageHeight = image.height;
-    var imageWidth = image.width;
     var initialSettings = {
-        horizontal: 10,
-        vertical: 10
+        horizontal: 4,
+        vertical: 4,
+        maxSize: 800
     };
     var settings = Object.assign({}, initialSettings, userSettings);
     var slices = settings.horizontal * settings.vertical;
+    var sizes = calculateSizes();
+    var imageHeight = sizes.height;
+    var imageWidth = sizes.width;
+
+    console.log(sizes);
 
     var dataurl = void 0;
+
+    function calculateSizes() {
+        var maxSize = settings.maxSize;
+        var width = image.width;
+        var height = image.height;
+
+        var newSize = {
+            height: height,
+            width: width
+        };
+
+        if (width > maxSize && height > maxSize) {
+            if (width > height) {
+                newSize.width = maxSize;
+                newSize.height = maxSize * (height / width);
+            } else {
+                newSize.width = maxSize * (width / height);
+                newSize.height = maxSize;
+            }
+        }
+
+        return newSize;
+    }
 
     function splitImageData() {
         var horizontal = settings.horizontal;
