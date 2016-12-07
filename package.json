@@ -39,6 +39,7 @@
     "gulp-uglify": "*",
     "gulp-util": "^3.0.7",
     "gulp-watch": "*",
+    "gulp-yaml": "^1.0.1",
     "marked": "^0.3.6",
     "normalize.css": "^5.0.0",
     "postcss-assets": "*",

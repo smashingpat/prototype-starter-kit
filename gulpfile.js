@@ -14,6 +14,8 @@ const postcss = require('gulp-postcss')
 const argv = require('yargs').argv
 const stripAnsi = require('strip-ansi')
 
+const yaml = require('gulp-yaml')
+
 const uglify = require('gulp-uglify')
 const rename = require('gulp-rename')
 const stream = require('gulp-streamify')
@@ -81,6 +83,15 @@ const tasks = {
                     })
                 ]))
             .pipe(gulpif(!argv.production, sourcemaps.write()))
+            .pipe(gulp.dest('./app'))
+            .pipe(browserSync.stream())
+
+    },
+    yaml: function() {
+
+        return gulp.src('./source/**/*.{yml,yaml}')
+            .pipe(plumber())
+            .pipe(yaml())
             .pipe(gulp.dest('./app'))
             .pipe(browserSync.stream())
 
@@ -182,15 +193,17 @@ const tasks = {
     watch: function(callback) {
         watch(['app/**/*.{html,json}'], browserSync.reload)
         watch(['source/**/*.{scss,sass}'], tasks.sass)
+        watch(['source/**/*.{yml,yaml}'], tasks.yaml)
         tasks.script({watch:true}, callback)
     }
 }
 
 gulp.task('sass', tasks.sass)
+gulp.task('yaml', tasks.yaml)
 gulp.task('script', cb => tasks.script({}, cb))
 
 gulp.task('watch', tasks.watch)
 gulp.task('server', tasks.server)
 
-gulp.task('serve', ['sass', 'watch', 'server'])
-gulp.task('bundle', ['sass', 'script'])
+gulp.task('serve', ['sass', 'yaml', 'watch', 'server'])
+gulp.task('bundle', ['sass', 'yaml', 'script'])

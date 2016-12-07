@@ -1,0 +1,7 @@
+bears:
+- name: Bobby
+  species: Grizzly
+- name: Charley
+  species: Polar
+- name: Steve
+  species: Koala
