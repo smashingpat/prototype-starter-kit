@@ -22,24 +22,20 @@ class App extends Component {
         this.renderSlicedImage(this.state.imageUrl)
     }
     renderSlicedImage(imageUrl) {
-        const image = new Image()
-
-        image.onload = () => {
-            const data = imageSlicer(image, {
-                maxSize: this.state.maxSize,
-                horizontal: this.state.horizontalSlices,
-                vertical: this.state.verticalSlices,
-            });
-            const { dataurl } = data;
-            const { height, width } = data.totalSize;
+        const params = {
+            size: this.state.maxSize,
+            horizontal: this.state.horizontalSlices,
+            vertical: this.state.verticalSlices,
+        }
+        imageSlicer(imageUrl, params).then(data => {
+            const { width, height, dataurl } = data;
             this.setState({
                 width,
                 height,
                 dataurl,
             })
-        }
+        });
 
-        image.src = imageUrl
     }
     toggleOutline() {
         this.setState({

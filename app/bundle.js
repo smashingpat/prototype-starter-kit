@@ -20505,27 +20505,22 @@ var App = function (_Component) {
         value: function renderSlicedImage(imageUrl) {
             var _this2 = this;
 
-            var image = new Image();
-
-            image.onload = function () {
-                var data = (0, _imageSlicer2.default)(image, {
-                    maxSize: _this2.state.maxSize,
-                    horizontal: _this2.state.horizontalSlices,
-                    vertical: _this2.state.verticalSlices
-                });
+            var params = {
+                size: this.state.maxSize,
+                horizontal: this.state.horizontalSlices,
+                vertical: this.state.verticalSlices
+            };
+            (0, _imageSlicer2.default)(imageUrl, params).then(function (data) {
+                var width = data.width;
+                var height = data.height;
                 var dataurl = data.dataurl;
-                var _data$totalSize = data.totalSize;
-                var height = _data$totalSize.height;
-                var width = _data$totalSize.width;
 
                 _this2.setState({
                     width: width,
                     height: height,
                     dataurl: dataurl
                 });
-            };
-
-            image.src = imageUrl;
+            });
         }
     }, {
         key: 'toggleOutline',
@@ -20675,49 +20670,181 @@ var _times2 = _interopRequireDefault(_times);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function imageSlicer(image, userSettings) {
-    var initialSettings = {
+/*
+function imageSlicer(imageUrl, userSettings) {
+    const initialSettings = {
         horizontal: 2,
         vertical: 2,
-        maxSize: 1000
+        maxSize: 1000,
     };
-    var settings = Object.assign({}, initialSettings, userSettings);
-    var slices = settings.horizontal * settings.vertical;
-    var sizes = calculateSizes();
-    var imageHeight = sizes.height;
-    var imageWidth = sizes.width;
+    const settings = Object.assign({}, initialSettings, userSettings);
+    const slices = (settings.horizontal * settings.vertical);
+    // const sizes = calculateSizes();
 
-    var dataurl = void 0;
+    let imageHeight = 0;
+    let imageWidth = 0;
+
+    let dataurl;
+
+    function createImage() {
+        const image = new Image();
+
+        image.onload = () => {
+            console.log('image loaded');
+            imageHeight = sizes.height
+            imageWidth = sizes.width
+        }
+
+        image.src = imageUrl;
+    }
+
+    createImage();
 
     function calculateSizes() {
-        var maxSize = settings.maxSize;
-        var width = image.width;
-        var height = image.height;
+        const { maxSize } = settings
+        const { width, height } = image;
+        let newSize = {
+            height,
+            width,
+        }
 
-        var newSize = {
-            height: height,
-            width: width
-        };
-
-        if (maxSize && width > maxSize && height > maxSize) {
+        if ( maxSize && width > maxSize && height > maxSize) {
             if (width > height) {
-                newSize.width = maxSize;
-                newSize.height = maxSize * (height / width);
+                newSize.width = maxSize
+                newSize.height = maxSize * (height / width)
             } else {
-                newSize.width = maxSize * (width / height);
-                newSize.height = maxSize;
+                newSize.width = maxSize * (width / height)
+                newSize.height = maxSize
             }
         }
 
-        return newSize;
+        return newSize
     }
 
     function splitImageData() {
+        const { horizontal, vertical } = settings
+        const imageWidthSlice = imageWidth / horizontal
+        const imageHeightSlice = imageHeight / vertical
+
+        let data = []
+
+        let x = 0
+        let y = 0
+
+        times(slices)((index) => {
+            const canvas = document.createElement('canvas')
+            const context = canvas.getContext('2d')
+
+            canvas.height = imageHeightSlice
+            canvas.width = imageWidthSlice
+
+            // Draw the image
+            context.drawImage(image, x, y, imageWidth, imageHeight)
+
+            // Move the pointers
+            if ((index + 1) % horizontal != 0) {
+                x = x - imageWidthSlice
+            } else {
+                x = 0
+                y = y - imageHeightSlice
+            }
+
+            data.push({
+                index,
+                imageData: canvas.toDataURL()
+            })
+        })
+
+        return data
+    }
+
+    dataurl = splitImageData()
+
+    return {
+        totalSize: {
+            height: imageHeight,
+            width: imageWidth,
+        },
+        dataurl
+    }
+}*/
+
+function imageSlicer(imageUrl, userSettings) {
+    var initialSettings = {
+        horizontal: 2,
+        vertical: 2,
+        size: null
+    };
+    var settings = Object.assign({}, initialSettings, userSettings);
+
+    var image = void 0;
+    var width = 0;
+    var height = 0;
+    var dataurl = [];
+
+    /*
+        Create a image element and fire
+        the slicer when it's done loading
+        through a promise
+    ------------------------------------------ */
+    function getImage() {
+        return new Promise(function (resolve, reject) {
+            image = new Image();
+
+            image.onload = function () {
+                calculateSizes();
+                createCanvas();
+                resolve({
+                    image: image,
+                    width: width,
+                    height: height,
+                    dataurl: dataurl
+                });
+            };
+
+            image.onerror = function () {
+                reject('Image couldn\'t be found');
+            };
+
+            setTimeout(function () {
+                image.src = imageUrl;
+            }, 200);
+        });
+    }
+
+    /*
+        Calculate sizes
+    ------------------------------------ */
+    function calculateSizes() {
+        var size = settings.size;
+
+        var originalWidth = image.width;
+        var originalHeight = image.height;
+
+        width = image.width;
+        height = image.height;
+
+        if (size && width > size && height > size) {
+            if (width > height) {
+                width = size;
+                height = size * (height / width);
+            } else {
+                width = size * (width / height);
+                height = size;
+            }
+        }
+    }
+
+    /*
+        Draw image on canvas and resize it
+    ------------------------------------------ */
+    function createCanvas() {
         var horizontal = settings.horizontal;
         var vertical = settings.vertical;
 
-        var imageWidthSlice = imageWidth / horizontal;
-        var imageHeightSlice = imageHeight / vertical;
+        var imageWidthSlice = width / horizontal;
+        var imageHeightSlice = height / vertical;
+        var slices = settings.horizontal * settings.vertical;
 
         var data = [];
 
@@ -20732,7 +20859,7 @@ function imageSlicer(image, userSettings) {
             canvas.width = imageWidthSlice;
 
             // Draw the image
-            context.drawImage(image, x, y, imageWidth, imageHeight);
+            context.drawImage(image, x, y, width, height);
 
             // Move the pointers
             if ((index + 1) % horizontal != 0) {
@@ -20742,7 +20869,7 @@ function imageSlicer(image, userSettings) {
                 y = y - imageHeightSlice;
             }
 
-            data.push({
+            dataurl.push({
                 index: index,
                 imageData: canvas.toDataURL()
             });
@@ -20751,15 +20878,13 @@ function imageSlicer(image, userSettings) {
         return data;
     }
 
-    dataurl = splitImageData();
+    function initialize() {
+        getImage();
+    }
 
-    return {
-        totalSize: {
-            height: imageHeight,
-            width: imageWidth
-        },
-        dataurl: dataurl
-    };
+    initialize();
+
+    return getImage();
 }
 
 exports.default = imageSlicer;
