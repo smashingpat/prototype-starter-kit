@@ -136,9 +136,7 @@ function imageSlicer(imageUrl, userSettings) {
                 reject(`Image couldn't be found`);
             }
 
-            setTimeout(() => {
-                image.src = imageUrl;
-            },200)
+            image.src = imageUrl;
         })
     }
 
@@ -174,7 +172,7 @@ function imageSlicer(imageUrl, userSettings) {
         const imageHeightSlice = height / vertical
         const slices = (settings.horizontal * settings.vertical);
 
-        let data = []
+        dataurl = [] // empty previous data
 
         let x = 0
         let y = 0
@@ -203,7 +201,6 @@ function imageSlicer(imageUrl, userSettings) {
             })
         })
 
-        return data
     }
 
 

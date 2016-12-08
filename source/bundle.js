@@ -7,35 +7,34 @@ class App extends Component {
         super()
         this.state = {
             imageUrl: '/image.jpg',
-            horizontalSlices: 2,
-            verticalSlices: 2,
+            horizontal: 2,
+            vertical: 2,
             width: 0,
             height: 0,
             dataurl: [],
             showOutlines: false,
             showOriginal: false,
             showDifference: false,
-            maxSize: 500
+            size: 500
         }
     }
     componentDidMount() {
-        this.renderSlicedImage(this.state.imageUrl)
+        this.renderSlicedImage(this.state.imageUrl, {
+            size: this.state.size,
+            horizontal: this.state.horizontal,
+            vertical: this.state.vertical,
+        })
     }
-    renderSlicedImage(imageUrl) {
-        const params = {
-            size: this.state.maxSize,
-            horizontal: this.state.horizontalSlices,
-            vertical: this.state.verticalSlices,
-        }
+    renderSlicedImage(imageUrl, params) {
         imageSlicer(imageUrl, params).then(data => {
             const { width, height, dataurl } = data;
+            console.log(data);
             this.setState({
                 width,
                 height,
                 dataurl,
             })
         });
-
     }
     toggleOutline() {
         this.setState({
@@ -57,17 +56,22 @@ class App extends Component {
     formHandler(event) {
         event.preventDefault();
         const imageUrl = this.refs.file.files[0] ? URL.createObjectURL(this.refs.file.files[0]) : this.state.imageUrl
-        const horizontalSlices = this.refs.horizontal.value
-        const verticalSlices = this.refs.vertical.value
-        const maxSize = this.refs.maxSize.value
+        const horizontal = this.refs.horizontal.value
+        const vertical = this.refs.vertical.value
+        const size = this.refs.size.value
+
         this.setState({
-            horizontalSlices,
-            verticalSlices,
-            maxSize,
+            horizontal,
+            vertical,
+            size,
             imageUrl
         })
 
-        this.renderSlicedImage(imageUrl)
+        this.renderSlicedImage(imageUrl, {
+            size,
+            horizontal,
+            vertical,
+        })
     }
     render() {
         return (
@@ -77,13 +81,13 @@ class App extends Component {
                         <input type="file" onChange={this.formHandler.bind(this)} ref="file" defaultValue={this.state.imageUrl}/>
                     </div>
                     <div>
-                        <input ref="horizontal" defaultValue={this.state.horizontalSlices}/>
+                        <input ref="horizontal" defaultValue={this.state.horizontal}/>
                     </div>
                     <div>
-                        <input ref="vertical" defaultValue={this.state.verticalSlices}/>
+                        <input ref="vertical" defaultValue={this.state.vertical}/>
                     </div>
                     <div>
-                        <input ref="maxSize" defaultValue={this.state.maxSize}/>
+                        <input ref="size" defaultValue={this.state.size}/>
                     </div>
                     <button type="submit">submit</button>
                 </form>

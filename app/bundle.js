@@ -20482,15 +20482,15 @@ var App = function (_Component) {
 
         _this.state = {
             imageUrl: '/image.jpg',
-            horizontalSlices: 2,
-            verticalSlices: 2,
+            horizontal: 2,
+            vertical: 2,
             width: 0,
             height: 0,
             dataurl: [],
             showOutlines: false,
             showOriginal: false,
             showDifference: false,
-            maxSize: 500
+            size: 500
         };
         return _this;
     }
@@ -20498,23 +20498,23 @@ var App = function (_Component) {
     _createClass(App, [{
         key: 'componentDidMount',
         value: function componentDidMount() {
-            this.renderSlicedImage(this.state.imageUrl);
+            this.renderSlicedImage(this.state.imageUrl, {
+                size: this.state.size,
+                horizontal: this.state.horizontal,
+                vertical: this.state.vertical
+            });
         }
     }, {
         key: 'renderSlicedImage',
-        value: function renderSlicedImage(imageUrl) {
+        value: function renderSlicedImage(imageUrl, params) {
             var _this2 = this;
 
-            var params = {
-                size: this.state.maxSize,
-                horizontal: this.state.horizontalSlices,
-                vertical: this.state.verticalSlices
-            };
             (0, _imageSlicer2.default)(imageUrl, params).then(function (data) {
                 var width = data.width;
                 var height = data.height;
                 var dataurl = data.dataurl;
 
+                console.log(data);
                 _this2.setState({
                     width: width,
                     height: height,
@@ -20550,17 +20550,22 @@ var App = function (_Component) {
         value: function formHandler(event) {
             event.preventDefault();
             var imageUrl = this.refs.file.files[0] ? URL.createObjectURL(this.refs.file.files[0]) : this.state.imageUrl;
-            var horizontalSlices = this.refs.horizontal.value;
-            var verticalSlices = this.refs.vertical.value;
-            var maxSize = this.refs.maxSize.value;
+            var horizontal = this.refs.horizontal.value;
+            var vertical = this.refs.vertical.value;
+            var size = this.refs.size.value;
+
             this.setState({
-                horizontalSlices: horizontalSlices,
-                verticalSlices: verticalSlices,
-                maxSize: maxSize,
+                horizontal: horizontal,
+                vertical: vertical,
+                size: size,
                 imageUrl: imageUrl
             });
 
-            this.renderSlicedImage(imageUrl);
+            this.renderSlicedImage(imageUrl, {
+                size: size,
+                horizontal: horizontal,
+                vertical: vertical
+            });
         }
     }, {
         key: 'render',
@@ -20581,17 +20586,17 @@ var App = function (_Component) {
                     _react2.default.createElement(
                         'div',
                         null,
-                        _react2.default.createElement('input', { ref: 'horizontal', defaultValue: this.state.horizontalSlices })
+                        _react2.default.createElement('input', { ref: 'horizontal', defaultValue: this.state.horizontal })
                     ),
                     _react2.default.createElement(
                         'div',
                         null,
-                        _react2.default.createElement('input', { ref: 'vertical', defaultValue: this.state.verticalSlices })
+                        _react2.default.createElement('input', { ref: 'vertical', defaultValue: this.state.vertical })
                     ),
                     _react2.default.createElement(
                         'div',
                         null,
-                        _react2.default.createElement('input', { ref: 'maxSize', defaultValue: this.state.maxSize })
+                        _react2.default.createElement('input', { ref: 'size', defaultValue: this.state.size })
                     ),
                     _react2.default.createElement(
                         'button',
@@ -20806,9 +20811,7 @@ function imageSlicer(imageUrl, userSettings) {
                 reject('Image couldn\'t be found');
             };
 
-            setTimeout(function () {
-                image.src = imageUrl;
-            }, 200);
+            image.src = imageUrl;
         });
     }
 
@@ -20846,7 +20849,7 @@ function imageSlicer(imageUrl, userSettings) {
         var imageHeightSlice = height / vertical;
         var slices = settings.horizontal * settings.vertical;
 
-        var data = [];
+        dataurl = []; // empty previous data
 
         var x = 0;
         var y = 0;
@@ -20874,8 +20877,6 @@ function imageSlicer(imageUrl, userSettings) {
                 imageData: canvas.toDataURL()
             });
         });
-
-        return data;
     }
 
     function initialize() {
