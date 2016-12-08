@@ -15,7 +15,7 @@ class App extends Component {
             showOutlines: false,
             showOriginal: false,
             showDifference: false,
-            size: 500
+            size: 300
         }
     }
     componentDidMount() {
@@ -34,6 +34,9 @@ class App extends Component {
                 height,
                 dataurl,
             })
+
+            const { image } = data;
+            image.width = width
         });
     }
     toggleOutline() {

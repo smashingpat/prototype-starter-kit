@@ -20490,7 +20490,7 @@ var App = function (_Component) {
             showOutlines: false,
             showOriginal: false,
             showDifference: false,
-            size: 500
+            size: 300
         };
         return _this;
     }
@@ -20520,6 +20520,10 @@ var App = function (_Component) {
                     height: height,
                     dataurl: dataurl
                 });
+
+                var image = data.image;
+
+                image.width = width;
             });
         }
     }, {
