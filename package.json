@@ -35,7 +35,6 @@
     "gulp-rename": "*",
     "gulp-sass": "*",
     "gulp-sourcemaps": "^2.1.1",
-    "gulp-streamify": "*",
     "gulp-uglify": "*",
     "gulp-util": "^3.0.7",
     "gulp-watch": "*",
@@ -45,6 +44,7 @@
     "postcss-assets": "*",
     "postcss-import": "^8.2.0",
     "strip-ansi": "^3.0.1",
+    "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "*",
     "watchify": "^3.7.0",
     "yargs": "*"
