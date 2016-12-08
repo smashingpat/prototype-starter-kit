@@ -60,12 +60,14 @@ class App extends Component {
     }
     formHandler(event) {
         event.preventDefault();
-        const imageUrl = URL.createObjectURL(this.refs.file.files[0])
+        const imageUrl = this.refs.file.files[0] ? URL.createObjectURL(this.refs.file.files[0]) : this.state.imageUrl
         const horizontalSlices = this.refs.horizontal.value
         const verticalSlices = this.refs.vertical.value
+        const maxSize = this.refs.maxSize.value
         this.setState({
             horizontalSlices,
             verticalSlices,
+            maxSize,
             imageUrl
         })
 
@@ -80,7 +82,12 @@ class App extends Component {
                     </div>
                     <div>
                         <input ref="horizontal" defaultValue={this.state.horizontalSlices}/>
+                    </div>
+                    <div>
                         <input ref="vertical" defaultValue={this.state.verticalSlices}/>
+                    </div>
+                    <div>
+                        <input ref="maxSize" defaultValue={this.state.maxSize}/>
                     </div>
                     <button type="submit">submit</button>
                 </form>
@@ -94,7 +101,7 @@ class App extends Component {
                 }}>
                     <div style={{
                         display: 'inline-block',
-                        width: this.state.width,
+                        width: this.state.width + 'px',
                         fontSize: 0,
                         outline: '1px solid red',
                     }}>

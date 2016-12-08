@@ -20554,12 +20554,14 @@ var App = function (_Component) {
         key: 'formHandler',
         value: function formHandler(event) {
             event.preventDefault();
-            var imageUrl = URL.createObjectURL(this.refs.file.files[0]);
+            var imageUrl = this.refs.file.files[0] ? URL.createObjectURL(this.refs.file.files[0]) : this.state.imageUrl;
             var horizontalSlices = this.refs.horizontal.value;
             var verticalSlices = this.refs.vertical.value;
+            var maxSize = this.refs.maxSize.value;
             this.setState({
                 horizontalSlices: horizontalSlices,
                 verticalSlices: verticalSlices,
+                maxSize: maxSize,
                 imageUrl: imageUrl
             });
 
@@ -20584,8 +20586,17 @@ var App = function (_Component) {
                     _react2.default.createElement(
                         'div',
                         null,
-                        _react2.default.createElement('input', { ref: 'horizontal', defaultValue: this.state.horizontalSlices }),
+                        _react2.default.createElement('input', { ref: 'horizontal', defaultValue: this.state.horizontalSlices })
+                    ),
+                    _react2.default.createElement(
+                        'div',
+                        null,
                         _react2.default.createElement('input', { ref: 'vertical', defaultValue: this.state.verticalSlices })
+                    ),
+                    _react2.default.createElement(
+                        'div',
+                        null,
+                        _react2.default.createElement('input', { ref: 'maxSize', defaultValue: this.state.maxSize })
                     ),
                     _react2.default.createElement(
                         'button',
@@ -20621,7 +20632,7 @@ var App = function (_Component) {
                         'div',
                         { style: {
                                 display: 'inline-block',
-                                width: this.state.width,
+                                width: this.state.width + 'px',
                                 fontSize: 0,
                                 outline: '1px solid red'
                             } },
