@@ -1,10 +1,14 @@
 'use strict';
 
 const gulp = require('gulp');
+const watch = require('gulp-watch');
 const browserSync = require('browser-sync');
 const config = require('../config');
 
 function startServer(callback) {
+    // watch files and reload on change
+    watch(config.files.dest.index + '/**/*.{html,jpg,png,gif,svg}', browserSync.reload);
+
     let server = browserSync({
         server: {
             baseDir: "./app/"
