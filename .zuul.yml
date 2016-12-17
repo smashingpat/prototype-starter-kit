@@ -1,0 +1,5 @@
+ui: tape
+local: true
+browserify:
+  - transform:
+      name: babelify

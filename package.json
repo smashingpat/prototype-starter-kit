@@ -7,7 +7,8 @@
     "start": "gulp serve",
     "open": "npm run start -- --open",
     "bundle": "gulp bundle --production",
-    "deploy": "gulp bundle && git subtree push --prefix site origin gh-pages"
+    "deploy": "gulp bundle && git subtree push --prefix site origin gh-pages",
+    "test": "zuul -- source/**/*.test.js"
   },
   "keywords": [
     "html",
@@ -44,9 +45,11 @@
     "postcss-assets": "*",
     "postcss-import": "^8.2.0",
     "strip-ansi": "^3.0.1",
+    "tape": "^4.6.3",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "*",
     "watchify": "^3.7.0",
-    "yargs": "*"
+    "yargs": "*",
+    "zuul": "^3.11.1"
   }
 }
