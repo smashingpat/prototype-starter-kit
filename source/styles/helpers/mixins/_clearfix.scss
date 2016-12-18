@@ -1,0 +1,18 @@
+/*
+    clearfix
+    --------
+
+    Adds clearfix to the element
+============================================================================= */
+
+@mixin clearfix() {
+    &:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+}
+
+@mixin cf() {
+    @include clearfix();
+}

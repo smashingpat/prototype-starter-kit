@@ -1,0 +1,15 @@
+/*
+    selection
+    ----------
+
+    Add styling to the selection
+============================================================================= */
+
+@mixin selection() {
+    &::selection {
+        @content;
+    }
+    &::-moz-selection {
+        @content;
+    }
+}

@@ -12,10 +12,7 @@
 html {
     font-size: $font-size;
     height: 100%;
-
-    @include media('screen', '<tablet') {
-        font-size: #{$font-size * 1.1};
-    }
+    @include fluid-type(320px, 1800px, $font-size, ($font-size * 1.4));
 }
 
 body {
