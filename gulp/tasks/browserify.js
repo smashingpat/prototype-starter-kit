@@ -15,6 +15,7 @@ const buffer = require('vinyl-buffer');
 const sourcemaps = require('gulp-sourcemaps');
 const uglify = require('gulp-uglify');
 const browserSync = require('browser-sync');
+const bytesToMegabytes = require('../utils/bytes-to-megabytes');
 const merge = require('../utils/merge');
 const errorHandler = require('../utils/error-handler');
 const config = require('../config');
@@ -56,9 +57,9 @@ function createInstance(entry, settings) {
 
     b.on('update', bundle)
     b.on('bytes', bytes => {
-        const kiloBytes = (bytes / 1000);
+        const megaBytes = bytesToMegabytes(bytes).toFixed(2)
         const difference = () => {
-            const difference = `${lastBytes - bytes}`
+            const difference = bytesToMegabytes(bytes - lastBytes).toFixed(2)
 
             if (difference > 0) {
                 return gutil.colors.bold.green('+' + difference)
@@ -68,7 +69,8 @@ function createInstance(entry, settings) {
                 return gutil.colors.bold.white(difference)
             }
         }
-        gutil.log(`[${gutil.colors.bold.blue(`browserify`)}] compiled ${gutil.colors.bold(filename)} (${kiloBytes}kb) -> ${difference()} bytes`)
+
+        gutil.log(`[${gutil.colors.bold.blue(`browserify`)}] compiled ${gutil.colors.bold(filename)} (${megaBytes}mb) -> ${difference()}mb`)
         lastBytes = bytes
     })
 
