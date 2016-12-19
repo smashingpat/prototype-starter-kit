@@ -1,3 +1,3 @@
-module.exports = function(...objects) {
-    return Object.assign({}, ...objects);
+module.exports = function(first, second, third) {
+    return Object.assign({}, first, second, third);
 }
