@@ -20,5 +20,5 @@ gulp.task('serve', [
 gulp.task('bundle', [
     'sass',
     'yaml',
-    'script'
+    'browserify'
 ]);
