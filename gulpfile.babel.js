@@ -7,6 +7,11 @@
 ----------------------------------------------------------------------------- */
 
 import gulp from 'gulp';
+import { production } from './gulp/config';
+
+// set NODE_ENV to production/development
+process.env.NODE_ENV = production ? 'production' : 'development';
+
 
 /*
     Tasks imports
