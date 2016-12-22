@@ -1,9 +1,9 @@
 /*
     Config file
 ========================================== */
-const argv = require('yargs').argv;
+import { argv } from 'yargs';
 
-module.exports = {
+export default {
     port: argv.port || 1337,
     production: argv.production || false,
     beautify: argv.beautify || false,
@@ -21,6 +21,6 @@ module.exports = {
             sass: './source/**/*.{sass,scss}',
             js: './source/**/*.{js,jsx}',
             yaml: './source/**/*.{yml,yaml}',
-        }
+        },
     },
 }

@@ -1,29 +1,26 @@
-'use strict';
-
-const gulp = require('gulp');
-const gulpif = require('gulp-if');
-const gutil = require('gulp-util');
-const glob = require('glob');
-const path = require('path');
-const es = require('event-stream');
-const browserify = require('browserify');
-const watchify = require('watchify');
-const babelify = require('babelify');
-const envify = require('envify/custom');
-const source = require('vinyl-source-stream');
-const buffer = require('vinyl-buffer');
-const sourcemaps = require('gulp-sourcemaps');
-const uglify = require('gulp-uglify');
-const browserSync = require('browser-sync');
-const bytesToMegabytes = require('../utils/bytes-to-megabytes');
-const merge = require('../utils/merge');
-const errorHandler = require('../utils/error-handler');
-const config = require('../config');
-
+import gulp from 'gulp'
+import gulpif from 'gulp-if'
+import gutil from 'gulp-util'
+import glob from 'glob'
+import path from 'path'
+import es from 'event-stream'
+import browserify from 'browserify'
+import watchify from 'watchify'
+import babelify from 'babelify'
+import envify from 'envify/custom'
+import source from 'vinyl-source-stream'
+import buffer from 'vinyl-buffer'
+import sourcemaps from 'gulp-sourcemaps'
+import uglify from 'gulp-uglify'
+import browserSync from 'browser-sync'
+import bytesToMegabytes from '../utils/bytes-to-megabytes'
+import merge from '../utils/merge'
+import errorHandler from '../utils/error-handler'
+import config from '../config'
 
 function createInstance(entry, settings) {
-    const filename = path.relative('./source/', entry);
-    let lastBytes = 0;
+    const filename = path.relative('./source/', entry)
+    let lastBytes = 0
 
     settings = merge({
         watch: false,
@@ -55,8 +52,7 @@ function createInstance(entry, settings) {
             .pipe(browserSync.stream())
     }
 
-    b.on('update', bundle)
-    b.on('bytes', bytes => {
+    const bytes = (bytes) => {
         const megaBytes = bytesToMegabytes(bytes).toFixed(2)
         const difference = () => {
             const difference = bytesToMegabytes(bytes - lastBytes).toFixed(2)
@@ -72,28 +68,29 @@ function createInstance(entry, settings) {
 
         gutil.log(`[${gutil.colors.bold.blue(`browserify`)}] compiled ${gutil.colors.bold(filename)} (${megaBytes}mb) -> ${difference()}mb`)
         lastBytes = bytes
-    })
+    }
+
+    b.on('update', bundle)
+    b.on('bytes', bytes)
 
     return bundle()
 }
 
 function compileBrowserify(settings) {
-
     settings = merge({
         watch: false,
         entries: './source/*.js'
-    }, settings);
+    }, settings)
 
     return function(callback) {
         glob(settings.entries, (error, files) => {
-            const streams = files.map(entry => createInstance(entry, settings));
+            const streams = files.map(entry => createInstance(entry, settings))
 
-            es.merge(streams).on('end', callback);
-        });
+            es.merge(streams).on('end', callback)
+        })
     }
-
-};
+}
 
 
 gulp.task('browserify', compileBrowserify())
-gulp.task('browserify:watch', compileBrowserify({watch: true}))
+gulp.task('browserify:watch', compileBrowserify({ watch: true }))

@@ -1,13 +1,11 @@
-'use strict';
-
-const gulp = require('gulp');
-const watch = require('gulp-watch');
-const browserSync = require('browser-sync');
-const config = require('../config');
+import gulp from 'gulp'
+import watch from 'gulp-watch'
+import browserSync from 'browser-sync'
+import config from '../config'
 
 function startServer(callback) {
     // watch files and reload on change
-    watch(config.files.dest.index + '/**/*.{html,jpg,png,gif,svg}', browserSync.reload);
+    watch(config.files.dest.index + '/**/*.{html,jpg,png,gif,svg}', browserSync.reload)
 
     let server = browserSync({
         server: {
@@ -34,4 +32,4 @@ function startServer(callback) {
     }, callback)
 }
 
-gulp.task('server', startServer);
+gulp.task('server', startServer)

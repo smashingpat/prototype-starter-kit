@@ -1,3 +1,1 @@
-const bytesToMegabytes = bytes => (bytes / 1048576)
-
-module.exports = bytesToMegabytes
+export default (bytes) => (bytes / 1048576)

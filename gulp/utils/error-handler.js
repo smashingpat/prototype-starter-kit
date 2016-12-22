@@ -1,10 +1,8 @@
-'use strict';
+import gutil from 'gulp-util'
+import browserSync from 'browser-sync'
+import stripAnsi from 'strip-ansi'
 
-const gutil = require('gulp-util');
-const browserSync = require('browser-sync');
-const stripAnsi = require('strip-ansi');
-
-module.exports = function(errorList, taskName) {
+export default (errorList, taskName) => function(err) {
     const style = {
         pre: 'padding:1em;margin:-1em;background-color:#F44336;color:#FFF;',
         code: 'color:#FFF;word-wrap:break-word;font-family:monospace;',
@@ -23,16 +21,14 @@ module.exports = function(errorList, taskName) {
         })
     }
 
-    return function(err) {
-        createStrings(err);
+    createStrings(err);
 
-        browserSync.notify(
-            `<pre style='${style.pre}'><code style='${style.code}'>${stripAnsi(bsMessage)}</code></pre>`,
-            300000
-        );
+    browserSync.notify(
+        `<pre style='${style.pre}'><code style='${style.code}'>${stripAnsi(bsMessage)}</code></pre>`,
+        300000
+    );
 
-        gutil.log(`${gutil.colors.red.bold(`error ${taskName}`)}:\n${logMessage}`);
+    gutil.log(`${gutil.colors.red.bold(`error ${taskName}`)}:\n${logMessage}`);
 
-        this.emit('end');
-    };
+    this.emit('end');
 };

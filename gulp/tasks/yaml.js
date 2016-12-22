@@ -1,11 +1,9 @@
-'use strict';
-
-const gulp = require('gulp');
-const watch = require('gulp-watch');
-const plumber = require('gulp-plumber');
-const yaml = require('gulp-yaml');
-const browserSync = require('browser-sync');
-const config = require('../config');
+import gulp from 'gulp'
+import watch from 'gulp-watch'
+import plumber from 'gulp-plumber'
+import yaml from 'gulp-yaml'
+import browserSync from 'browser-sync'
+import config from '../config'
 
 
 function compileYaml() {
@@ -17,8 +15,8 @@ function compileYaml() {
 }
 
 function watchFiles() {
-    return watch(config.files.watch.yaml, compileYaml);
+    return watch(config.files.watch.yaml, compileYaml)
 }
 
-gulp.task('yaml', compileYaml);
-gulp.task('yaml:watch', watchFiles);
+gulp.task('yaml', compileYaml)
+gulp.task('yaml:watch', watchFiles)
