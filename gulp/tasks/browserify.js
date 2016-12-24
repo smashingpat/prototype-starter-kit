@@ -19,12 +19,18 @@ import errorHandler from '../utils/error-handler';
 import config from '../config';
 
 
-function createInstance(entry, params) {
-    const filename = path.relative('./source/', entry);
+const createSettings = params => {
     const defaultSettings = {
         watch: false,
+        entries: './source/*.js'
     };
-    const settings = merge(defaultSettings, params);
+
+    return merge(defaultSettings, params);
+};
+
+function createInstance(entry, params) {
+    const filename = path.basename(entry);
+    const settings = createSettings(params);
 
     let lastBytes = 0;
 
@@ -58,36 +64,30 @@ function createInstance(entry, params) {
             .pipe(browserSync.stream());
     }
 
-    const bytes = (bytes) => {
+    b.on('update', bundle);
+    b.on('bytes', (bytes) => {
         const megaBytes = bytesToMegabytes(bytes).toFixed(2);
         const difference = () => {
             const difference = bytesToMegabytes(bytes - lastBytes).toFixed(2);
 
             if (difference > 0) {
                 return gutil.colors.bold.green('+' + difference);
-            } else if (difference < 0) {
-                return gutil.colors.bold.yellow(difference);
-            } else {
-                return gutil.colors.bold.white(difference);
             }
+            return gutil.colors.bold.yellow(difference);
         }
+        const message = `[${gutil.colors.bold.blue(`browserify`)}] compiled ${filename} (${megaBytes}mb) -> ${difference()}mb`;
 
-        gutil.log(`[${gutil.colors.bold.blue(`browserify`)}] compiled ${gutil.colors.bold(filename)} (${megaBytes}mb) -> ${difference()}mb`);
+        // update lastBytes
         lastBytes = bytes;
-    }
 
-    b.on('update', bundle);
-    b.on('bytes', bytes);
+        gutil.log(message);
+    });
 
     return bundle();
 }
 
 function compileBrowserify(params) {
-    const defaultSettings = {
-        watch: false,
-        entries: './source/*.js'
-    };
-    const settings = merge(defaultSettings, params);
+    const settings = createSettings(params);
 
     return function(callback) {
         glob(settings.entries, (error, files) => {
