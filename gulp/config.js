@@ -5,6 +5,7 @@ import { argv } from 'yargs';
 
 export default {
     port: argv.port || 1337,
+    open: argv.open || false,
     production: argv.production || false,
     beautify: argv.beautify || false,
     files: {
