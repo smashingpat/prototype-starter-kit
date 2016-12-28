@@ -18,7 +18,11 @@ npm start
 npm run bundle
 ```
 
-This starts a watch server and open `localhost:1337` in your default browser. Changes made to `source/index.js` will bundle the files and refreshes the browser. Changes made to `source/sass/*.scss` will cause CSS injection without losing the current state.
+This starts a watch server and open `localhost:1337` in your default browser. Changes made to all files with the extensions `js`, `sass`, `scss`, `yml` and `yaml` will build into the `app` folder with an automatic refresh of the server.
+
+- `js` files will transpile into javascript, direct files within the `source` folder will be seperated bundles and those within underlying folders can be imported
+- `scss` & `sass` will be compiled to CSS, partials (starts with an underscore) won't be compiled
+- `yml` & `yaml` will be compiled to JSON
 
 ## Tasks
 ```sh
