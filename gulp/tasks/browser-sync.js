@@ -1,15 +1,19 @@
 import gulp from 'gulp'
 import watch from 'gulp-watch'
 import browserSync from 'browser-sync'
+import compression from 'compression'
 import config from '../config'
 
 function startServer(callback) {
-    // watch files and reload on change
+
     watch(config.files.dest.index + '/**/*.{html,jpg,png,gif,svg}', browserSync.reload)
 
     let server = browserSync({
         server: {
-            baseDir: "./app/"
+            baseDir: "./app/",
+            middleware: [
+                config.gzip && compression(),
+            ].filter(Boolean),
         },
         open: config.open,
         port: config.port,

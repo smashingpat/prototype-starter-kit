@@ -8,6 +8,7 @@ export default {
     open: argv.open || false,
     production: argv.production || false,
     beautify: argv.beautify || false,
+    gzip: argv.gzip || false,
     files: {
         dest: {
             index: './app',

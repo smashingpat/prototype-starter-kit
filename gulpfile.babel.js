@@ -7,10 +7,10 @@
 ----------------------------------------------------------------------------- */
 
 import gulp from 'gulp';
-import { production } from './gulp/config';
+import config from './gulp/config';
 
 // set NODE_ENV to production/development
-process.env.NODE_ENV = production ? 'production' : 'development';
+process.env.NODE_ENV = config.production ? 'production' : 'development';
 
 
 /*
@@ -19,7 +19,7 @@ process.env.NODE_ENV = production ? 'production' : 'development';
 import './gulp/tasks/sass';
 import './gulp/tasks/yaml';
 import './gulp/tasks/browserify';
-import './gulp/tasks/browserSync';
+import './gulp/tasks/browser-sync';
 
 /*
     Combine gulp tasks
