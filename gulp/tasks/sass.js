@@ -12,26 +12,26 @@ import config from '../config'
 function compileSass() {
     return gulp.src(config.files.source.sass)
         .pipe(plumber({
-            errorHandler: errorHandler(['message'], 'sass')
+            errorHandler: errorHandler(['message'], 'sass'),
         }))
         .pipe(gulpif(!config.production, sourcemaps.init()))
         .pipe(sass({
-            outputStyle: 'expanded'
+            outputStyle: 'expanded',
         }))
         .pipe(postcss([
             require('postcss-assets')({
                 loadPaths: ['**'],
                 basePath: './app',
-                cachebuster: true
+                cachebuster: true,
             }),
             require('autoprefixer')({ browsers: ['last 1 version'] }),
             require('postcss-import')(),
             require('cssnano')({
                 core: config.production ? true : false,
                 discardComments: {
-                    removeAll: true
-                }
-            })
+                    removeAll: true,
+                },
+            }),
         ]))
         .pipe(gulpif(!config.production, sourcemaps.write()))
         .pipe(gulp.dest(config.files.dest.index))

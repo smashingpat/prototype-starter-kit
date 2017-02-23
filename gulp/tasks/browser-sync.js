@@ -10,7 +10,7 @@ function startServer(callback) {
 
     let server = browserSync({
         server: {
-            baseDir: "./app/",
+            baseDir: './app/',
             middleware: [
                 config.gzip && compression(),
             ].filter(Boolean),
@@ -30,9 +30,9 @@ function startServer(callback) {
                 'left': '0px',
                 'font-size': '11px',
                 'text-align': 'left',
-                'text-shadow': '0 1px 2px rgba(0,0,0,.4)'
-            }
-        }
+                'text-shadow': '0 1px 2px',
+            },
+        },
     }, callback)
 }
 
