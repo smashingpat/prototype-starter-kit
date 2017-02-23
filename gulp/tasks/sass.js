@@ -39,7 +39,8 @@ function compileSass() {
 }
 
 function watchFiles() {
-    return watch(config.files.watch.sass, compileSass)
+    watch(config.files.watch.sass, compileSass)
+    return compileSass()
 }
 
 gulp.task('sass', compileSass)

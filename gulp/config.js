@@ -11,7 +11,7 @@ export default {
     gzip: argv.gzip || false,
     files: {
         dest: {
-            index: './app',
+            index: './dist',
         },
         source: {
             index: './source',

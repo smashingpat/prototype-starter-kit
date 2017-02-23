@@ -16,6 +16,8 @@ process.env.NODE_ENV = config.production ? 'production' : 'development'
 /*
     Tasks imports
 ------------------------------------------ */
+import './gulp/tasks/clean'
+import './gulp/tasks/copy'
 import './gulp/tasks/sass'
 import './gulp/tasks/yaml'
 import './gulp/tasks/browserify'
@@ -25,9 +27,7 @@ import './gulp/tasks/browser-sync'
     Combine gulp tasks
 ------------------------------------------ */
 gulp.task('serve', [
-    'sass',
-    'yaml',
-    'browserify',
+    'copy:watch',
     'sass:watch',
     'yaml:watch',
     'browserify:watch',
@@ -35,6 +35,7 @@ gulp.task('serve', [
 ])
 
 gulp.task('bundle', [
+    'copy',
     'sass',
     'yaml',
     'browserify',

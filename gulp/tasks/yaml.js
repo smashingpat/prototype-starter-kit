@@ -15,7 +15,8 @@ function compileYaml() {
 }
 
 function watchFiles() {
-    return watch(config.files.watch.yaml, compileYaml)
+    watch(config.files.watch.yaml, compileYaml)
+    return compileYaml()
 }
 
 gulp.task('yaml', compileYaml)

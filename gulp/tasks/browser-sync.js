@@ -10,7 +10,7 @@ function startServer(callback) {
 
     let server = browserSync({
         server: {
-            baseDir: './app/',
+            baseDir: config.files.dest.index,
             middleware: [
                 config.gzip && compression(),
             ].filter(Boolean),

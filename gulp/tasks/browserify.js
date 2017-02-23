@@ -60,7 +60,7 @@ function createInstance(entry, params) {
                 },
             })))
             .pipe(gulpif(!config.production, sourcemaps.write()))
-            .pipe(gulp.dest('./app'))
+            .pipe(gulp.dest(config.files.dest.index))
             .pipe(browserSync.stream())
     }
 
