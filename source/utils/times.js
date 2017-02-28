@@ -7,14 +7,14 @@
 
 const iterator = instance => fn => x => {
     if (instance > 0) {
-        return iterator(instance - 1)(fn)(fn(x))
+        return iterator(instance - 1)(fn)(fn(x));
     }
-    return x
-}
+    return x;
+};
 
 const times = x => fn => {
-    return iterator(x)(i => (fn(i), i + 1))(0)
-}
+    return iterator(x)(i => (fn(i), i + 1))(0);
+};
 
 
-export default times
+export default times;

@@ -41,7 +41,7 @@ rules:
   no-extra-semi: 2
   no-debugger: 2
   no-caller: 1
-  semi: [1, "never"]
+  semi: [1, "always"]
   quotes: [1, "single", "avoid-escape"]
   no-unreachable: 2
   eol-last: 1

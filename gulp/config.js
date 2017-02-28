@@ -25,4 +25,4 @@ export default {
             yaml: './source/**/*.{yml,yaml}',
         },
     },
-}
+};

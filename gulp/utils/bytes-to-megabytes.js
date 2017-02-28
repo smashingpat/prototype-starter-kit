@@ -1,1 +1,1 @@
-export default (bytes) => (bytes / 1048576)
+export default (bytes) => (bytes / 1048576);

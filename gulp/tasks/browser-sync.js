@@ -1,12 +1,12 @@
-import gulp from 'gulp'
-import watch from 'gulp-watch'
-import browserSync from 'browser-sync'
-import compression from 'compression'
-import config from '../config'
+import gulp from 'gulp';
+import watch from 'gulp-watch';
+import browserSync from 'browser-sync';
+import compression from 'compression';
+import config from '../config';
 
 function startServer(callback) {
 
-    watch(config.files.dest.index + '/**/*.{html,jpg,png,gif,svg}', browserSync.reload)
+    watch(config.files.dest.index + '/**/*.{html,jpg,png,gif,svg}', browserSync.reload);
 
     let server = browserSync({
         server: {
@@ -33,7 +33,7 @@ function startServer(callback) {
                 'text-shadow': '0 1px 2px',
             },
         },
-    }, callback)
+    }, callback);
 }
 
-gulp.task('server', startServer)
+gulp.task('server', startServer);
