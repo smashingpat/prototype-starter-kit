@@ -4,6 +4,10 @@ import watch from 'gulp-watch';
 import plumber from 'gulp-plumber';
 import sass from 'gulp-sass';
 import postcss from 'gulp-postcss';
+import postcssAssets from 'postcss-assets';
+import autoprefixer from 'autoprefixer';
+import postcssImport from 'postcss-import';
+import cssnano from 'cssnano';
 import sourcemaps from 'gulp-sourcemaps';
 import browserSync from 'browser-sync';
 import errorHandler from '../utils/error-handler';
@@ -19,15 +23,15 @@ function compileSass() {
             outputStyle: 'expanded',
         }))
         .pipe(postcss([
-            require('postcss-assets')({
+            postcssAssets({
                 loadPaths: ['**'],
                 basePath: './app',
                 cachebuster: true,
             }),
-            require('autoprefixer')({ browsers: ['last 1 version'] }),
-            require('postcss-import')(),
-            require('cssnano')({
-                core: config.production ? true : false,
+            autoprefixer({ browsers: ['last 1 version'] }),
+            postcssImport(),
+            cssnano({
+                core: config.production,
                 discardComments: {
                     removeAll: true,
                 },

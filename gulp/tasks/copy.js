@@ -1,6 +1,5 @@
 import gulp from 'gulp';
 import watch from 'gulp-watch';
-import plumber from 'gulp-plumber';
 import config from '../config';
 
 

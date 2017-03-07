@@ -19,7 +19,7 @@ import errorHandler from '../utils/error-handler';
 import config from '../config';
 
 
-const createSettings = params => {
+const createSettings = (params) => {
     const defaultSettings = {
         watch: false,
         entries: './source/*.js',
@@ -48,21 +48,19 @@ function createInstance(entry, params) {
         ].filter(Boolean),
     });
 
-    const bundle = () => {
-        return b.bundle()
-            .on('error', errorHandler(['filename', 'message', 'codeFrame'], 'browserify'))
-            .pipe(source(filename))
-            .pipe(buffer())
-            .pipe(gulpif(!config.production, sourcemaps.init({ loadMaps: true })))
-            .pipe(gulpif(config.production, uglify({
-                output: {
-                    beautify: config.beautify ? true : false,
-                },
-            })))
-            .pipe(gulpif(!config.production, sourcemaps.write()))
-            .pipe(gulp.dest(config.files.dest.index))
-            .pipe(browserSync.stream());
-    };
+    const bundle = () => b.bundle()
+        .on('error', errorHandler(['filename', 'message', 'codeFrame'], 'browserify'))
+        .pipe(source(filename))
+        .pipe(buffer())
+        .pipe(gulpif(!config.production, sourcemaps.init({ loadMaps: true })))
+        .pipe(gulpif(config.production, uglify({
+            output: {
+                beautify: config.beautify,
+            },
+        })))
+        .pipe(gulpif(!config.production, sourcemaps.write()))
+        .pipe(gulp.dest(config.files.dest.index))
+        .pipe(browserSync.stream());
 
     b.on('update', bundle);
     b.on('bytes', (bytes) => {
@@ -71,7 +69,7 @@ function createInstance(entry, params) {
             const difference = bytesToMegabytes(bytes - lastBytes).toFixed(2);
 
             if (difference > 0) {
-                return gutil.colors.bold.green('+' + difference);
+                return gutil.colors.bold.green(`+${difference}`);
             }
             return gutil.colors.bold.yellow(difference);
         };
@@ -89,13 +87,11 @@ function createInstance(entry, params) {
 function compileBrowserify(params) {
     const settings = createSettings(params);
 
-    return function(callback) {
-        glob(settings.entries, (error, files) => {
-            const streams = files.map(entry => createInstance(entry, settings));
+    return callback => glob(settings.entries, (error, files) => {
+        const streams = files.map(entry => createInstance(entry, settings));
 
-            es.merge(streams).on('end', callback);
-        });
-    };
+        es.merge(streams).on('end', callback);
+    });
 }
 
 

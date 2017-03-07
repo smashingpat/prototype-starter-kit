@@ -5,10 +5,9 @@ import compression from 'compression';
 import config from '../config';
 
 function startServer(callback) {
+    watch(`${config.files.dest.index}/**/*.{html,jpg,png,gif,svg}`, browserSync.reload);
 
-    watch(config.files.dest.index + '/**/*.{html,jpg,png,gif,svg}', browserSync.reload);
-
-    let server = browserSync({
+    const server = browserSync({
         server: {
             baseDir: config.files.dest.index,
             middleware: [
@@ -34,6 +33,8 @@ function startServer(callback) {
             },
         },
     }, callback);
+
+    return server;
 }
 
 gulp.task('server', startServer);

@@ -39,6 +39,7 @@
     "cssnano": "^3.9.1",
     "envify": "^4.0.0",
     "event-stream": "^3.3.4",
+    "glob": "^7.1.1",
     "gulp": "^3.9.1",
     "gulp-clean": "^0.3.2",
     "gulp-if": "^2.0.2",
