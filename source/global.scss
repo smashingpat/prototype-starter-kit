@@ -29,4 +29,7 @@ body {
 }
 canvas {
     border: 1px solid tomato;
+    cursor: none;
+    max-width: 100%;
+    width: auto;
 }

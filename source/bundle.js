@@ -1,68 +1,133 @@
 const defaultSettings = {
-    width: 500,
-    height: 300,
+    width: 700,
+    height: 500,
 };
 
 const spaceinvader = (canvasElement, userSettings = {}) => {
     const canvas = canvasElement;
     const ctx = canvas.getContext('2d');
     const settings = { ...defaultSettings, ...userSettings };
+    const invaderWidth = 30;
+    const invaderHeight = 20;
+    const missileWidth = 2;
+    const missileHeight = 5;
 
     let mouseX = 0;
     let mouseY = 0;
+    let invaderX = 0;
+    let invaderY = 0;
+    const enemies = [];
     const missiles = [];
 
-    const createMissile = (initialX, initialY) => {
+    const createEnemy = (initialX, initialY) => {
         let x = initialX;
         let y = initialY;
-
+        const size = 50;
         return {
             draw() {
-                ctx.fillStyle = 'white';
+                x = mouseX;
+                y = mouseY;
+                ctx.fillStyle = 'rgba(0,0,0,.4)';
                 ctx.fillRect(
                     x,
                     y,
-                    10,
-                    40,
+                    size,
+                    size,
                 );
+            },
+            checkHit(missiles) {
+                missiles.forEach(missile => {
+                    if (
+                        (missile.x > x && missile.x < x + size) &&
+                        (missile.y > y && missile.y < y + size)
+                    ) {
+                        missile.hit();
+                    }
+                })
+            },
+        };
+    };
+
+    const createMissile = (initialX, initialY) => {
+        const x = initialX + ((invaderWidth / 2) - (missileWidth / 2));
+        let y = initialY;
+        let hit = false;
+
+        return {
+            get x() {
+                return x;
+            },
+            get y() {
+                return y;
+            },
+            draw() {
+                if (y < 0) {
+                    this.remove();
+                    return;
+                }
+                if (!hit) {
+                    ctx.fillStyle = 'cyan';
+                    ctx.fillRect(
+                        x,
+                        y,
+                        missileWidth,
+                        missileHeight,
+                    );
+                }
                 y -= 5;
+            },
+            hit() {
+                hit = true;
+            },
+            remove() {
+                missiles.shift();
             },
         };
     };
 
     const invader = (x, y) => {
-        const size = 50;
+        ctx.fillStyle = 'tomato';
+        invaderX = Math.max(Math.min(x - (invaderHeight / 2), canvas.width - invaderHeight), 0);
+        invaderY = Math.max(Math.min(y - (invaderWidth / 2), canvas.height - invaderWidth), 0);
 
-        ctx.fillStyle = 'white';
         ctx.fillRect(
-            x - (size / 2),
-            y - (size / 2),
-            size,
-            size,
+            invaderX,
+            invaderY,
+            invaderWidth,
+            invaderHeight,
         );
     };
 
+    const mouseMoveHandler = (e) => {
+        mouseX = e.clientX - canvas.offsetLeft;
+        mouseY = e.clientY - canvas.offsetTop;
+        missiles.push(createMissile(invaderX, invaderY));
+    };
+
+    const mouseDownHandler = () => {
+        missiles.push(createMissile(invaderX, invaderY));
+    };
+
     const addEventListeners = () => {
-        document.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX - canvas.offsetLeft;
-            mouseY = e.clientY - canvas.offsetTop;
-        });
-        document.addEventListener('mousedown', () => {
-            missiles.push(createMissile(mouseX, mouseY));
-        });
+        document.addEventListener('mousemove', mouseMoveHandler);
+        document.addEventListener('mousedown', mouseDownHandler);
     };
 
     const render = () => {
         ctx.fillStyle = 'black';
-        ctx.fillRect(
+        ctx.clearRect(
             0,
             0,
             settings.width,
             settings.height,
         );
 
-        invader(mouseX, mouseY);
         missiles.forEach(missile => missile.draw());
+        enemies.forEach((enemy) => {
+            enemy.draw();
+            enemy.checkHit(missiles);
+        });
+        invader(mouseX, canvas.height - 10);
 
         requestAnimationFrame(render, canvas);
     };
@@ -72,6 +137,7 @@ const spaceinvader = (canvasElement, userSettings = {}) => {
         canvas.width = settings.width;
         addEventListeners();
         render();
+        enemies.push(createEnemy(100, 100));
     };
 
     init();
