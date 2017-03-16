@@ -21,3 +21,12 @@
 
 // hack file
 @import 'styles/hacks';
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+canvas {
+    border: 1px solid tomato;
+}
